@@ -214,6 +214,11 @@ The layout implementation on the IHP SG13G2 (130nm BiCMOS) node. Each core sub-c
 
 5. PEX (Parasitic Extraction)
 
+Parasitic extraction was conducted via Magic VLSI using standard extraction rules (`ext2spice`) on the IHP SG13G2 PDK:
+a. **Extraction Mode:** Lumped C (or RC) extraction capturing wire-to-wire capacitance and diffusion junction parasitics.
+b. **Modular Netlists:** Extracted sub-circuit files (`pex_bias.spice`, `pex_cascode.spice`, `pex_cmfb.spice`) are stored in the `/pex` directory.
+c. **Post-Layout Co-Simulation:** The extracted netlists replace the idealized schematic blocks to evaluate the physical circuit behavior under loaded parasitic conditions.
+
 6. Post-Layout Simulation
 
 
