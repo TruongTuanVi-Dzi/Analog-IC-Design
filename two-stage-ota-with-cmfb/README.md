@@ -22,7 +22,7 @@ The transistor sizing follows the square-law design methodology under target spe
 
 $$I_{tail} = SR \times C_c$$
 
-*(where $C_c$ is the Miller compensation capacitance, or $C_L$ for a single-stage load)*
+*(where $C_{c}$ is the Miller compensation capacitance, or $C_{L}$ for a single-stage load)*
 
 #### Input Transistor Transconductance ($g_{m1,2}$) for Unity-Gain Bandwidth
 
@@ -58,11 +58,21 @@ $$\omega_{p2} \approx \frac{g_{m,CS}}{C_L}$$
 
 $$\omega_{z1} \approx \frac{g_{m,CS}}{C_c}$$
 
-*(Nulling resistor $R_z \approx 1/g_{m,CS}$ is placed in series with $C_c$ to eliminate or shift this zero into the LHP)*
+*(Nulling resistor $R_{z} \approx 1/g_{m,CS}$ is placed in series with $C_{c}$ to eliminate or shift this zero into the LHP)*
 
 #### Common-Mode Feedback (CMFB) Loop Gain
 
 $$A_{v,CM} \approx g_{m,CMFB} \cdot R_{out1}$$
+
+### Schematic & Hierarchical Architecture
+
+The operational amplifier is structured into three sub-blocks alongside the top-level testbench symbol:
+
+| Top-Level Symbol | Bias Circuit (`BIAS`) |
+| :---: | :---: |
+| <img src="images/all_block_symbol.png" width="420" alt="Top-Level Symbol"/> | <img src="images/bias_schematic.png" width="420" alt="Bias Schematic"/> |
+| **Cascode Core Stage (`CASCODE`)** | **Common-Mode Feedback (`CMFB`)** |
+| <img src="images/cascode_schematic.png" width="420" alt="Cascode Core Schematic"/> | <img src="images/cmfb_schematic.png" width="420" alt="CMFB Schematic"/> |
 
 3. Simulation
 
