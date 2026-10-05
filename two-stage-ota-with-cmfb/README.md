@@ -221,5 +221,42 @@ c. **Post-Layout Co-Simulation:** The extracted netlists replace the idealized s
 
 6. Post-Layout Simulation
 
+Post-layout simulations were performed by co-simulating the extracted PEX netlists (`pex_bias.spice`, `pex_cascode.spice`, `pex_cmfb.spice`) within the top-level testbench schematic (`All_Block.sch`) to evaluate the impact of parasitic capacitances ($C_{wire}, C_j$) and interconnect routing.
+
+### 6.1. Post-Layout Co-Simulation Testbench
+The hierarchical testbench incorporates all three physical layout extractions to mirror real silicon behavior:
+
+| Post-Layout Testbench Schematic | Testbench Netlist Mapping |
+| :---: | :---: |
+| <img src="images/post_tb_schematic.png" width="450" alt="Post-Layout Testbench"/> | <img src="images/post_tb_netlist.png" width="450" alt="PEX Symbol Integration"/> |
+
+---
+
+### 6.2. Pre-Layout vs. Post-Layout Performance Comparison
+
+The table below summarizes the quantitative degradation observed after accounting for extracted parasitics under nominal conditions ($V_{DD} = 1.2\text{ V}$, $T = 27^\circ\text{C}$, $C_L = 2\text{ pF}$):
+
+| Performance Metric | Target Spec | Pre-Layout | Post-Layout | Variation ($\Delta$) |
+| :--- | :---: | :---: | :---: | :---: |
+| **DC Gain** | $\ge 75\text{ dB}$ | $75.3536\text{ dB}$ | $75.3445\text{ dB}$ | $-0.0091\text{ dB}$ |
+| **Gain-Bandwidth** | $\ge 200\text{ MHz}$ | $167.961\text{ MHz}$ | $154.607\text{ MHz}$ | $-13.354\text{ MHz } (-7.95\%)$ |
+| **Phase Margin (PM)** | $\ge 60^\circ$ | $63.0044^\circ$ | $61.8106^\circ$ | $-1.1938^\circ$ |
+| **Total Power** | $< 3.0\text{ mW}$ | $2.6067\text{ mW}$ | $2.6047\text{ mW}$ | $-0.0020\text{ mW}$ |
+| **Output Common-Mode** | $= 0.60\text{ V}$ | $0.6150\text{ V}$ | $0.6157\text{ V}$ | $+0.7\text{ mV}$ |
+| **Referred Noise @ 1MHz** | $< 15\text{ nV}/\sqrt{\text{Hz}}$ | $7.4926\text{ nV}/\sqrt{\text{Hz}}$ | $7.4944\text{ nV}/\sqrt{\text{Hz}}$ | $+0.0018\text{ nV}/\sqrt{\text{Hz}}$ |
+| **CMRR DC** | $> 80\text{ dB}$ | $100.85\text{ dB}$ | $100.76\text{ dB}$ | $-0.09\text{ dB}$ |
+| **PSRR DC** | $> 70\text{ dB}$ | $206.07\text{ dB}$ | $158.47\text{ dB}$ | $-47.60\text{ dB}$ |
+| **Slew Rate (SR)** | $> 100\text{ V}/\mu\text{s}$ | $50.3686\text{ V}/\mu\text{s}$ | $48.7191\text{ V}/\mu\text{s}$ | $-1.6495\text{ V}/\mu\text{s}$ |
+| **Differential Swing** | $> 1.0\text{ V}_{pp}$ | $1.4066\text{ V}_{pp}$ | $1.3867\text{ V}_{pp}$ | $-0.0199\text{ V}_{pp}$ |
+---
+
+### 6.3. Waveform Comparison (Pre vs. Post Layout)
+
+Overlay waveforms highlight the frequency roll-off and parasitic loading effects:
+
+| AC Frequency Response (Bode Plot) | Transient Step & Slew Rate |
+| :---: | :---: |
+| <img src="images/ac_bode.png" width="450" alt="Bode Plot Comparison"/> | <img src="images/transient.png" width="450" alt="Transient Step Comparison"/> |
+
 
 
