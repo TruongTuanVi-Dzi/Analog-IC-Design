@@ -14,25 +14,41 @@
     - Output CM Voltage: VDD/2
     - Power Dissipation < 3mW (Entire Circuit)
 
-2. Calculate Size of Transistors
-    The transistor sizing follows the square-law design methodology under target specifications:
+2. Calculate Size of Transistors**
+
+The sizing of the two-stage folded-cascode operational amplifier is governed by key target specifications ($SR$, $GBW$, $A_v$, and $C_L$) under square-law approximations:
 
 * **Slew Rate & Tail Current Calculation:**
-
-$$I_{tail} = SR \times C_L$$
+  $$I_{tail} = SR \times C_c$$
+  *(where $C_c$ is the Miller compensation capacitance, or $C_L$ for a single-stage load)*
 
 * **Input Transistor Transconductance ($g_{m1,2}$) for Unity-Gain Bandwidth:**
+  $$g_{m1,2} = 2\pi \times GBW \times C_c$$
 
-$$g_{m1,2} = 2\pi \times UGBW \times C_L$$
+* **Aspect Ratio ($W / L$) for Differential Input Pair:**
+  $$\left(\frac{W}{L}\right)_{1,2} = \frac{g_{m1,2}^2}{2\mu_n C_{ox} I_D} = \frac{g_{m1,2}^2}{\mu_n C_{ox} I_{tail}}$$
 
-* **Aspect Ratio ($W/L$) for Differential Pair:**
+* **First-Stage (Folded-Cascode) Output Resistance ($R_{out1}$):**
+  $$R_{out1} \approx \left[ g_{m,casN} \cdot r_{o,casN} \cdot (r_{oN} \parallel r_{oP,in}) \right] \;\parallel\; \left[ g_{m,casP} \cdot r_{o,casP} \cdot r_{oP} \right]$$
 
-$$\left(\frac{W}{L}\right)_{1,2} = \frac{g_{m1,2}^2}{2 \mu_n C_{ox} I_D}$$
+* **Second-Stage (Common-Source) Gain & Output Resistance ($R_{out2}$):**
+  $$A_{v2} = -g_{m,CS} \cdot R_{out2} = -g_{m,CS} \cdot (r_{oN,CS} \parallel r_{oP,CS})$$
 
-* **DC Voltage Gain Approximation:**
+* **Overall Open-Loop DC Voltage Gain ($A_v$):**
+  $$A_v = A_{v1} \times A_{v2} \approx (g_{m1,2} \cdot R_{out1}) \times \left[ g_{m,CS} \cdot (r_{oN,CS} \parallel r_{oP,CS}) \right]$$
 
-$$A_v = A_{v1} \times A_{v2} \approx \left[ g_{m1} (g_{m3} r_{o3} r_{o1} \parallel g_{m5} r_{o5} r_{o7}) \right] \times \left[ g_{m9} (r_{o9} \parallel r_{o10}) \right]$$
-  
+* **Frequency Compensation & Phase Margin Constraints:**
+  * **Dominant Pole ($p_1$):**
+    $$\omega_{p1} \approx \frac{1}{R_{out1} \cdot g_{m,CS} \cdot R_{out2} \cdot C_c}$$
+  * **Non-Dominant Output Pole ($p_2$):**
+    $$\omega_{p2} \approx \frac{g_{m,CS}}{C_L}$$
+  * **Right-Half-Plane (RHP) Zero ($z_1$):**
+    $$\omega_{z1} \approx \frac{g_{m,CS}}{C_c}$$
+  *(Nulling resistor $R_z \approx 1/g_{m,CS}$ is placed in series with $C_c$ to eliminate or shift this zero into the LHP).*
+
+* **Common-Mode Feedback (CMFB) Loop Gain:**
+  $$A_{v,CM} \approx g_{m,CMFB} \cdot R_{out1}$$
+
 3. Simulation
 
 4. Layout & Matching Techniques
