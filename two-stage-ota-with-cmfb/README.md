@@ -76,6 +76,108 @@ The operational amplifier is structured into three sub-blocks alongside the top-
 
 3. Simulation
 
+## 3. Simulation & Performance Verification
+
+All testbenches are evaluated using open-source EDA tools (Xschem and Ngspice) under IHP SG13G2 (130nm BiCMOS) process conditions.
+
+---
+
+### 3.1. DC Operating Point Analysis (`TEST_DC_OP.sch`)
+* **Objective:** Verify transistor biasing and confirm all core transistors operate in the saturation region ($V_{DS} > V_{DS,sat}$).
+* **Key Observations:** Checked quiescent currents across bias branches and established common-mode input/output levels.
+
+| Testbench Schematic | DC Operating Point Table / Output |
+| :---: | :---: |
+| <img src="images/tb_dc_op.png" width="450" alt="DC OP Testbench"/> | <img src="images/res_dc_op.png" width="450" alt="DC Operating Results"/> |
+
+---
+
+### 3.2. AC Frequency Response (`TEST_AC.sch`)
+* **Objective:** Extract Open-Loop DC Gain ($A_v$), Unity-Gain Bandwidth (UGBW / GBW), and Phase Margin (PM) under load capacitance ($C_L = 2\text{ pF}$).
+* **Measured Performance:**
+  * **DC Gain ($A_{v0}$):** `75.3536 dB`
+  * **Phase Margin (PM):** `63.0237°`
+  * **Unity-Gain Bandwidth (UGBW):** `167.85MHz`
+
+| AC Testbench | Bode Plot (Magnitude & Phase) |
+| :---: | :---: |
+| <img src="images/tb_ac.png" width="450" alt="AC Testbench"/> | <img src="images/res_ac.png" width="450" alt="AC Bode Plot"/> |
+
+---
+
+### 3.3. Transient Large-Signal Step Response & Slew Rate (`TEST_TRANS.sch`)
+* **Objective:** Evaluate large-signal step response in unity-gain feedback configuration to measure Slew Rate ($SR$) and settling time.
+* **Measured Performance:**
+  * **Positive Slew Rate ($SR_+$):** `35.2902 V/µs`
+  * **Negative Slew Rate ($SR_-$):** `35.2897V/µs`
+  * **Settling Time ($0.1\%$):** `60.1564 ns`
+
+| Transient Testbench | Step Response Waveform |
+| :---: | :---: |
+| <img src="images/tb_trans.png" width="450" alt="Transient Testbench"/> | <img src="images/res_trans.png" width="450" alt="Transient Step Response"/> |
+
+---
+
+### 3.4. Dynamic Sinusoidal Response & Linearity (`TEST_SIN.sch`)
+* **Objective:** Assess output swing limits and Total Harmonic Distortion (THD) under continuous sinusoidal excitation.
+* **Measured Performance:**
+  * **Output Voltage Swing (Differential):** `0.985014 Vp-p`
+  * **THD:** `1.43756 %` @ `1MHz`
+
+| Sinusoidal Testbench | Output Waveform & FFT Spectrum |
+| :---: | :---: |
+| <img src="images/tb_sin.png" width="450" alt="Sine Testbench"/> | <img src="images/res_sin.png" width="450" alt="Sine Response"/> |
+
+---
+
+### 3.5. Common-Mode Feedback Stability (`TEST_CMFB.sch`)
+* **Objective:** Validate the stability of the common-mode control loop and output common-mode voltage ($V_{OCM}$) regulation.
+* **Measured Performance:**
+  * **CMFB Loop DC Gain:** `71.3231dB`
+  * **CMFB Phase Margin:** `99.0619°`
+  * **Regulated $V_{OCM}$:** `0.615V` (Target: $V_{DD}/2$)
+
+| CMFB Testbench | CMFB Loop Bode Plot |
+| :---: | :---: |
+| <img src="images/tb_cmfb.png" width="450" alt="CMFB Testbench"/> | <img src="images/res_cmfb.png" width="450" alt="CMFB Bode Plot"/> |
+
+---
+
+### 3.6. Noise Spectral Density (`TEST_NOISE.sch`)
+* **Objective:** Characterize equivalent input-referred noise density ($S_{ni}$) and total integrated noise over the operating bandwidth.
+* **Measured Performance:**
+  * **Thermal Noise Floor:** `7.3688 nV/√Hz` @ `1 MHz`
+  * **1/f Corner Frequency ($f_c$):** `316.2278 kHz`
+  * **Integrated Input Noise:** `114.2961 µV_rms`
+
+| Noise Testbench | Input-Referred Noise Plot |
+| :---: | :---: |
+| <img src="images/tb_noise.png" width="450" alt="Noise Testbench"/> | <img src="images/res_noise.png" width="450" alt="Noise Plot"/> |
+
+---
+
+### 3.7. Process Corners Verification (`TEST_CORNER_PROCESS.sch`)
+* **Objective:** Ensure circuit robustness across process variations (TT, SS, FF, SF, FS) at temperature extremes.
+* **Measured Range:**
+  * **Gain Range:** `67.14dB` to `79.54dB`
+  * **Phase Margin Range:** `12.56°` to `86.70°`
+
+| Corner Testbench | Superimposed AC Responses (Corners) |
+| :---: | :---: |
+| <img src="images/tb_corner.png" width="450" alt="Corner Testbench"/> | <img src="images/res_corner.png" width="450" alt="Corner Responses"/> |
+
+---
+
+### 3.8. Monte Carlo Statistical Analysis (`TEST_MONTE_CARLO.sch`)
+* **Objective:** Simulate random transistor mismatch and threshold voltage variations to observe offset voltage and gain distribution.
+* **Statistical Yield:**
+  * **Input Offset Voltage ($\sigma_{Vos}$):** `0.9568mV`
+  * **Number of Runs:** `N = 200`
+
+| Monte Carlo Testbench | Offset / Gain Histogram |
+| :---: | :---: |
+| <img src="images/tb_mc.png" width="450" alt="Monte Carlo Testbench"/> | <img src="images/res_mc.png" width="450" alt="Monte Carlo Histogram"/> |
+
 4. Layout & Matching Techniques
 
 5. PEX (Parasitic Extraction)
