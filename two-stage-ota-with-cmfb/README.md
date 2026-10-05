@@ -16,38 +16,53 @@
 
 2. Calculate Size of Transistors**
 
-The sizing of the two-stage folded-cascode operational amplifier is governed by key target specifications ($SR$, $GBW$, $A_v$, and $C_L$) under square-law approximations:
+The transistor sizing follows the square-law design methodology under target specifications:
 
-* **Slew Rate & Tail Current Calculation:**
-  $$I_{tail} = SR \times C_c$$
-  *(where $C_c$ is the Miller compensation capacitance, or $C_L$ for a single-stage load)*
+#### Slew Rate & Tail Current Calculation
 
-* **Input Transistor Transconductance ($g_{m1,2}$) for Unity-Gain Bandwidth:**
-  $$g_{m1,2} = 2\pi \times GBW \times C_c$$
+$$I_{tail} = SR \times C_c$$
 
-* **Aspect Ratio ($W / L$) for Differential Input Pair:**
-  $$\left(\frac{W}{L}\right)_{1,2} = \frac{g_{m1,2}^2}{2\mu_n C_{ox} I_D} = \frac{g_{m1,2}^2}{\mu_n C_{ox} I_{tail}}$$
+*(where $C_c$ is the Miller compensation capacitance, or $C_L$ for a single-stage load)*
 
-* **First-Stage (Folded-Cascode) Output Resistance ($R_{out1}$):**
-  $$R_{out1} \approx \left[ g_{m,casN} \cdot r_{o,casN} \cdot (r_{oN} \parallel r_{oP,in}) \right] \;\parallel\; \left[ g_{m,casP} \cdot r_{o,casP} \cdot r_{oP} \right]$$
+#### Input Transistor Transconductance ($g_{m1,2}$) for Unity-Gain Bandwidth
 
-* **Second-Stage (Common-Source) Gain & Output Resistance ($R_{out2}$):**
-  $$A_{v2} = -g_{m,CS} \cdot R_{out2} = -g_{m,CS} \cdot (r_{oN,CS} \parallel r_{oP,CS})$$
+$$g_{m1,2} = 2\pi \times GBW \times C_c$$
 
-* **Overall Open-Loop DC Voltage Gain ($A_v$):**
-  $$A_v = A_{v1} \times A_{v2} \approx (g_{m1,2} \cdot R_{out1}) \times \left[ g_{m,CS} \cdot (r_{oN,CS} \parallel r_{oP,CS}) \right]$$
+#### Aspect Ratio ($W / L$) for Differential Input Pair
 
-* **Frequency Compensation & Phase Margin Constraints:**
-  * **Dominant Pole ($p_1$):**
-    $$\omega_{p1} \approx \frac{1}{R_{out1} \cdot g_{m,CS} \cdot R_{out2} \cdot C_c}$$
-  * **Non-Dominant Output Pole ($p_2$):**
-    $$\omega_{p2} \approx \frac{g_{m,CS}}{C_L}$$
-  * **Right-Half-Plane (RHP) Zero ($z_1$):**
-    $$\omega_{z1} \approx \frac{g_{m,CS}}{C_c}$$
-  *(Nulling resistor $R_z \approx 1/g_{m,CS}$ is placed in series with $C_c$ to eliminate or shift this zero into the LHP).*
+$$\left(\frac{W}{L}\right)_{1,2} = \frac{g_{m1,2}^2}{2\mu_n C_{ox} I_D} = \frac{g_{m1,2}^2}{\mu_n C_{ox} I_{tail}}$$
 
-* **Common-Mode Feedback (CMFB) Loop Gain:**
-  $$A_{v,CM} \approx g_{m,CMFB} \cdot R_{out1}$$
+#### First-Stage (Telescopic Cascode) Output Resistance ($R_{out1}$)
+
+$$R_{out1} \approx \left( g_{m,casN} \cdot r_{o,casN} \cdot r_{oN,in} \right) \;\parallel\; \left( g_{m,casP} \cdot r_{o,casP} \cdot r_{oP} \right)$$
+
+#### Second-Stage (Common-Source) Gain & Output Resistance ($R_{out2}$)
+
+$$A_{v2} = -g_{m,CS} \cdot R_{out2} = -g_{m,CS} \cdot (r_{oN,CS} \parallel r_{oP,CS})$$
+
+#### Overall Open-Loop DC Voltage Gain ($A_v$)
+
+$$A_v = A_{v1} \times A_{v2} \approx (g_{m1,2} \cdot R_{out1}) \times \left[ g_{m,CS} \cdot (r_{oN,CS} \parallel r_{oP,CS}) \right]$$
+
+#### Frequency Compensation & Stability
+
+* Dominant Pole ($p_1$):
+
+$$\omega_{p1} \approx \frac{1}{R_{out1} \cdot g_{m,CS} \cdot R_{out2} \cdot C_c}$$
+
+* Non-Dominant Output Pole ($p_2$):
+
+$$\omega_{p2} \approx \frac{g_{m,CS}}{C_L}$$
+
+* Right-Half-Plane (RHP) Zero ($z_1$):
+
+$$\omega_{z1} \approx \frac{g_{m,CS}}{C_c}$$
+
+*(Nulling resistor $R_z \approx 1/g_{m,CS}$ is placed in series with $C_c$ to eliminate or shift this zero into the LHP)*
+
+#### Common-Mode Feedback (CMFB) Loop Gain
+
+$$A_{v,CM} \approx g_{m,CMFB} \cdot R_{out1}$$
 
 3. Simulation
 
