@@ -180,6 +180,38 @@ All testbenches are evaluated using open-source EDA tools (Xschem and Ngspice) u
 
 4. Layout & Matching Techniques
 
+The layout implementation on the IHP SG13G2 (130nm BiCMOS) node. Each core sub-circuit is implemented, verified (DRC/LVS).
+
+---
+
+### 4.1. Bias Circuit Block (`BIAS_Block`)
+* **Design Features:** Current mirror matching with multi-finger transistor layout and shared source/drain diffusion to establish stable reference currents.
+* **Verification Status:** 100% DRC Clean & LVS Clean.
+
+| Layout View | DRC & LVS Clean Result |
+| :---: | :---: |
+| <img src="images/layout_bias.png" width="450" alt="Bias Layout"/> | <img src="images/verify_bias.png" width="450" alt="Bias Verification"/> |
+
+---
+
+### 4.2. Cascode Core Stage Block (`CASCODE_Block`)
+* **Design Features:** Differential input pair layout with symmetric routing, common-centroid/interdigitated placement, and cascode transistor stacking to optimize gain and output swing.
+* **Verification Status:** 100% DRC Clean & LVS Clean.
+
+| Layout View | DRC & LVS Clean Result |
+| :---: | :---: |
+| <img src="images/layout_cascode.png" width="450" alt="Cascode Layout"/> | <img src="images/verify_cascode.png" width="450" alt="Cascode Verification"/> |
+
+---
+
+### 4.3. Common-Mode Feedback Block (`CMFB_Block`)
+* **Design Features:** Differential sensing transistor matching and symmetric routing to tightly regulate the output common-mode voltage ($V_{OCM} \approx V_{DD}/2$).
+* **Verification Status:** 100% DRC Clean & LVS Clean.
+
+| Layout View | DRC & LVS Clean Result |
+| :---: | :---: |
+| <img src="images/layout_cmfb.png" width="450" alt="CMFB Layout"/> | <img src="images/verify_cmfb.png" width="450" alt="CMFB Verification"/> |
+
 5. PEX (Parasitic Extraction)
 
 6. Post-Layout Simulation
