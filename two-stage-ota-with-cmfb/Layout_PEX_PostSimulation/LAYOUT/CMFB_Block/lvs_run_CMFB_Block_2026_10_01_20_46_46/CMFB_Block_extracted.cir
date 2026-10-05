@@ -1,0 +1,20 @@
+* Extracted by KLayout with SG13G2 LVS runset on : 01/10/2026 20:46
+
+.SUBCKT CMFB_Block VSS VCMFBG VCMFBL VDD V_OP VCM V_ON V_BIAS1
+M$2 VSS VCMFBG VCMFBG VSS sg13_lv_nmos L=0.3u W=7.2u AS=1.548p AD=1.548p
++ PS=10.98u PD=10.98u rfmode=0
+M$5 VSS VCMFBL VCMFBL VSS sg13_lv_nmos L=0.3u W=7.2u AS=1.548p AD=1.548p
++ PS=10.98u PD=10.98u rfmode=0
+M$16 \$11 V_OP VCMFBG VDD sg13_lv_pmos L=0.3u W=7.2u AS=1.728p AD=1.728p
++ PS=12.48u PD=12.48u rfmode=0
+M$19 \$11 VCM VCMFBL VDD sg13_lv_pmos L=0.3u W=7.2u AS=1.548p AD=1.548p
++ PS=10.98u PD=10.98u rfmode=0
+M$29 \$12 V_ON VCMFBG VDD sg13_lv_pmos L=0.3u W=7.2u AS=1.728p AD=1.728p
++ PS=12.48u PD=12.48u rfmode=0
+M$32 \$12 VCM VCMFBL VDD sg13_lv_pmos L=0.3u W=7.2u AS=1.548p AD=1.548p
++ PS=10.98u PD=10.98u rfmode=0
+M$43 VDD V_BIAS1 \$11 VDD sg13_lv_pmos L=0.3u W=48u AS=9.12p AD=9.12p PS=54.08u
++ PD=54.08u rfmode=0
+M$59 VDD V_BIAS1 \$12 VDD sg13_lv_pmos L=0.3u W=48u AS=9.12p AD=9.12p PS=54.08u
++ PD=54.08u rfmode=0
+.ENDS CMFB_Block

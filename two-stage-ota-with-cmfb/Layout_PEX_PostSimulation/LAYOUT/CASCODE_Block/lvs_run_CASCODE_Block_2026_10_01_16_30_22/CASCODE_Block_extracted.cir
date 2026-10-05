@@ -1,0 +1,35 @@
+* Extracted by KLayout with SG13G2 LVS runset on : 01/10/2026 16:30
+
+.SUBCKT CASCODE_Block VSS V_BIAS4 V_ON2 V_OP2 VCMFBG V_BIAS3 V_ON1 VDD V_OP1
++ V_BIAS2 V_IN V_IP V_BIAS1
+M$2 VSS V_BIAS4 V_ON2 VSS sg13_lv_nmos L=0.5u W=80u AS=15.2p AD=15.2p PS=83.8u
++ PD=83.8u rfmode=0
+M$14 VSS V_BIAS4 V_OP2 VSS sg13_lv_nmos L=0.5u W=80u AS=15.2p AD=15.2p PS=83.8u
++ PD=83.8u rfmode=0
+M$27 \$13 VCMFBG VSS VSS sg13_lv_nmos L=0.6u W=30u AS=6.15p AD=6.15p PS=37.1u
++ PD=37.1u rfmode=0
+M$32 VSS VCMFBG \$14 VSS sg13_lv_nmos L=0.6u W=30u AS=5.7p AD=5.7p PS=33.8u
++ PD=33.8u rfmode=0
+M$49 \$13 V_BIAS3 V_ON1 VSS sg13_lv_nmos L=0.5u W=30u AS=6.15p AD=6.15p
++ PS=37.1u PD=37.1u rfmode=0
+M$61 \$14 V_BIAS3 V_OP1 VSS sg13_lv_nmos L=0.5u W=30u AS=6.15p AD=6.15p
++ PS=37.1u PD=37.1u rfmode=0
+M$71 \$46 V_BIAS2 V_OP1 VDD sg13_lv_pmos L=0.5u W=135u AS=26.1p AD=26.1p
++ PS=155.4u PD=155.4u rfmode=0
+M$116 \$34 V_BIAS2 V_ON1 VDD sg13_lv_pmos L=0.5u W=135u AS=26.1p AD=26.1p
++ PS=155.4u PD=155.4u rfmode=0
+M$162 VDD V_ON1 V_ON2 VDD sg13_lv_pmos L=0.5u W=120u AS=22.8p AD=22.8p
++ PS=135.2u PD=135.2u rfmode=0
+M$206 \$45 V_IP \$46 VDD sg13_lv_pmos L=0.45u W=240u AS=46.05p AD=46.05p
++ PS=273.7u PD=273.7u rfmode=0
+M$226 \$45 V_IN \$34 VDD sg13_lv_pmos L=0.45u W=240u AS=46.05p AD=46.05p
++ PS=273.7u PD=273.7u rfmode=0
+M$288 VDD V_OP1 V_OP2 VDD sg13_lv_pmos L=0.5u W=120u AS=22.8p AD=22.8p
++ PS=135.2u PD=135.2u rfmode=0
+M$413 VDD V_BIAS1 \$45 VDD sg13_lv_pmos L=0.45u W=120u AS=22.8p AD=22.8p
++ PS=135.2u PD=135.2u rfmode=0
+R$457 \$1 V_ON1 VSS rppd w=0.5u l=1.47u ps=0u b=0 m=1
+R$458 \$2 V_OP1 VSS rppd w=0.5u l=1.47u ps=0u b=0 m=1
+C$459 \$1 V_ON2 cap_cmim w=44.72u l=44.72u A=1999.8784p P=178.88u m=1
+C$460 \$2 V_OP2 cap_cmim w=44.72u l=44.72u A=1999.8784p P=178.88u m=1
+.ENDS CASCODE_Block

@@ -1,0 +1,182 @@
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/TEST_NOISE.sch
+**.subckt TEST_NOISE
+VDD VDD VSS 1.2
+VSS VSS 0 0.0
+V_IN V_IN VSS DC 0.6 AC -1.0
+V_IP V_IP VSS DC 0.6 AC 1.0
+V_BIAS V_BIAS VSS DC 0.7
+V_BIAS1 VCM VSS DC 0.4
+CL1 VOP VON 2p
+x1 VSS V_BIAS4 V_BIAS2 V_BIAS3 VDD V_BIAS1 V_BIAS BIAS_Block
+x2 VDD V_BIAS1 V_IN V_IP V_BIAS2 V_ON1 V_OP1 V_BIAS1 VON VOP VCMFBG V_BIAS4 VSS CASCODE_Block
+x3 VDD V_BIAS1 VCM VOP VON VCMFBL VCMFBG VSS CMFB_Block
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+
+
+* ==============================================================================
+* MUC D: NOISE SIMULATION (FULL OUTPUT & 1/f CORNER EXTRACTION)
+* ==============================================================================
+
+.control
+set color0=white
+set color1=black
+
+echo '=========================================================================='
+echo '  D. NOISE ANALYSIS: INPUT-REFERRED NOISE, 1/f CORNER & INTEGRATED NOISE'
+echo '=========================================================================='
+
+* 1. Chay phan tich Noise tu 1 Hz den GBW = 200 MHz, 20 diem moi decade
+noise v(vop,von) v_ip dec 20 1 200Meg
+
+* 2. Lay ket qua tu plot chua pho nhieu (noise1)
+setplot noise1
+
+* Doi don vi sang nV/sqrt(Hz) de ve va hien thi
+let irn_nv = inoise_spectrum * 1e9
+let orn_nv = onoise_spectrum * 1e9
+
+* --- TRICH XUAT SAN NHIEU TRANG (WHITE NOISE FLOOR) ---
+* Lay gia tri mat do nhieu o vung tan so cao
+let len = length(inoise_spectrum)
+let white_floor = inoise_spectrum[len - 10]
+let white_floor_nv = white_floor * 1e9
+
+* --- TRICH XUAT 1/f CORNER FREQUENCY (fc) ---
+* Tai fc, mat do nhieu = sqrt(2) * white_floor = 1.4142 * white_floor
+let target_val = white_floor * 1.41421356
+
+let idx = 0
+while (inoise_spectrum[idx] > target_val and idx < len - 1)
+  let idx = idx + 1
+end
+
+let f_corner = frequency[idx]
+
+* 3. Lay tong nhieu tich luy tu plot noise2
+setplot noise2
+let rms_in  = inoise_total
+let rms_out = onoise_total
+
+echo '--------------------------------------------------------------------------'
+echo 'KET QUA NOISE SIMULATION (1 Hz den GBW = 200 MHz):'
+echo '--------------------------------------------------------------------------'
+setplot noise1
+print white_floor_nv
+print f_corner
+setplot noise2
+print rms_in rms_out
+echo '--------------------------------------------------------------------------'
+
+* Quay lai plot noise1 de ve 2 do thi pho mat do nhieu
+setplot noise1
+
+* Ve pho mat do nhieu quy doi ve ngo vao (Input-Referred Noise)
+plot irn_nv xlog ylabel 'Input Noise Density (nV/sqrt(Hz))' xlabel 'Frequency (Hz)' title 'Input-Referred Noise Spectral Density'
+
+* Ve pho mat do nhieu tai ngo ra (Output Noise)
+plot orn_nv xlog ylabel 'Output Noise Density (nV/sqrt(Hz))' xlabel 'Frequency (Hz)' title 'Output Noise Spectral Density'
+
+* 4. In bang chi tiet dong gop nhieu cua tat ca transistor
+setplot noise2
+echo '--------------------------------------------------------------------------'
+echo 'DONG GOP NHIEU CUA TUNG LINH KIEN (PRINT NOISE SUMMARY):'
+echo '--------------------------------------------------------------------------'
+print all
+echo '--------------------------------------------------------------------------'
+
+.endc
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  BIAS_Block/BIAS_Block.sym # of pins=7
+** sym_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/BIAS_Block/BIAS_Block.sym
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/BIAS_Block/BIAS_Block.sch
+.subckt BIAS_Block VSS V_BIAS4 V_BIAS2 V_BIAS3 VDD V_BIAS1 V_BIAS
+*.iopin VSS
+*.opin V_BIAS4
+*.opin V_BIAS2
+*.opin V_BIAS3
+*.iopin VDD
+*.opin V_BIAS1
+*.ipin V_BIAS
+XM1 net1 net1 net2 VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM9 V_BIAS3 V_BIAS2 net4 VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM10 V_BIAS3 V_BIAS3 V_BIAS4 VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM11 V_BIAS4 V_BIAS4 VSS VSS sg13_lv_nmos w=3.3u l=0.3u ng=3
+XM8 net4 V_BIAS1 VDD VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM6 V_BIAS2 net1 net3 VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM2 net1 V_BIAS VDD VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM7 net3 net2 VSS VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM4 V_BIAS1 V_BIAS1 VDD VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM5 V_BIAS2 V_BIAS2 V_BIAS1 VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM3 net2 net2 VSS VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+.ends
+
+
+* expanding   symbol:  CASCODE_Block/CASCODE_Block.sym # of pins=13
+** sym_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/CASCODE_Block/CASCODE_Block.sym
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/CASCODE_Block/CASCODE_Block.sch
+.subckt CASCODE_Block VDD V_BIAS1 V_IN V_IP V_BIAS2 V_ON1 V_OP1 V_BIAS3 V_ON2 V_OP2 VCMFBG V_BIAS4 VSS
+*.iopin VDD
+*.ipin V_IN
+*.ipin V_IP
+*.iopin VSS
+*.ipin V_BIAS2
+*.ipin V_BIAS1
+*.ipin VCMFBG
+*.opin V_ON1
+*.opin V_OP1
+*.ipin V_BIAS3
+*.ipin V_BIAS4
+*.opin V_ON2
+*.opin V_OP2
+XM5 V_ON1 V_BIAS3 net4 VSS sg13_lv_nmos w=30u l=0.5u ng=10
+XM6 V_OP1 V_BIAS3 net5 VSS sg13_lv_nmos w=30u l=0.5u ng=10
+XM7 net4 VCMFBG VSS VSS sg13_lv_nmos w=30u l=0.6u ng=10
+XM8 net5 VCMFBG VSS VSS sg13_lv_nmos w=30u l=0.6u ng=10
+XM1 net2 V_IN net1 VDD sg13_lv_pmos w=120u l=0.45u ng=40 m=2
+XM2 net3 V_IP net1 VDD sg13_lv_pmos w=120u l=0.45u ng=40 m=2
+XM3 V_ON1 V_BIAS2 net2 VDD sg13_lv_pmos w=135u l=0.5u ng=45
+XM4 V_OP1 V_BIAS2 net3 VDD sg13_lv_pmos w=135u l=0.5u ng=45
+XM0 net1 V_BIAS1 VDD VDD sg13_lv_pmos w=120u l=0.45u ng=40
+XM_CS1 V_ON2 V_ON1 VDD VDD sg13_lv_pmos w=120u l=0.5u ng=40
+XM_CS2 V_OP2 V_OP1 VDD VDD sg13_lv_pmos w=120u l=0.5u ng=40
+XM_L1 V_ON2 V_BIAS4 VSS VSS sg13_lv_nmos w=80u l=0.5u ng=10
+XM_L2 V_OP2 V_BIAS4 VSS VSS sg13_lv_nmos w=80u l=0.5u ng=10
+R2 V_ON1 net6 0.9k
+C1 net6 V_ON2 3p
+R1 V_OP1 net7 0.9k
+C2 net7 V_OP2 3p
+.ends
+
+
+* expanding   symbol:  CMFB_Block/CMFB_Block.sym # of pins=8
+** sym_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/CMFB_Block/CMFB_Block.sym
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/CMFB_Block/CMFB_Block.sch
+.subckt CMFB_Block VDD V_BIAS1 VCM V_OP V_ON VCMFBL VCMFBG VSS
+*.ipin V_OP
+*.ipin V_ON
+*.ipin V_BIAS1
+*.iopin VCMFBL
+*.iopin VCMFBG
+*.iopin VSS
+*.iopin VDD
+*.iopin VCM
+XM14 net2 V_BIAS1 VDD VDD sg13_lv_pmos w=48.0u l=0.3u ng=16
+XM15 net1 V_BIAS1 VDD VDD sg13_lv_pmos w=48.0u l=0.3u ng=16
+XM16 VCMFBG V_OP net1 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+XM17 VCMFBL VCM net1 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+XM18 VCMFBL VCM net2 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+XM19 VCMFBG V_ON net2 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+XM20 VCMFBL VCMFBL VSS VSS sg13_lv_nmos w=7.2u l=0.3u ng=6
+XM21 VCMFBG VCMFBG VSS VSS sg13_lv_nmos w=7.2u l=0.3u ng=6
+.ends
+
+.end

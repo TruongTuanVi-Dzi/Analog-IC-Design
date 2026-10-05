@@ -1,0 +1,131 @@
+* NGSPICE file created from BIAS_Block.ext - technology: ihp-sg13g2
+
+.subckt nmos_bias a_68_n36# a_204_n36# sub a_264_0# a_128_0# a_400_0# a_0_0# a_340_n36#
+X0 a_264_0# a_204_n36# a_128_0# sub sg13_lv_nmos ad=0.209p pd=1.48u as=0.209p ps=1.48u w=1.1u l=0.3u
+X1 a_400_0# a_340_n36# a_264_0# sub sg13_lv_nmos ad=0.374p pd=2.88u as=0.209p ps=1.48u w=1.1u l=0.3u
+X2 a_128_0# a_68_n36# a_0_0# sub sg13_lv_nmos ad=0.209p pd=1.48u as=0.374p ps=2.88u w=1.1u l=0.3u
+C0 a_128_0# a_204_n36# 0.01388fS
+C1 a_264_0# a_340_n36# 0.01388f
+C2 a_264_0# a_400_0# 0.03983f
+C3 a_0_0# a_68_n36# 0.01388f
+C4 a_264_0# a_128_0# 0.03983f
+C5 a_400_0# a_340_n36# 0.01388f
+C6 a_128_0# a_0_0# 0.03983f
+C7 a_264_0# a_204_n36# 0.01388f
+C8 a_128_0# a_68_n36# 0.01388f
+C9 a_400_0# sub 0.09837f
+C10 a_264_0# sub 0.09468f
+C11 a_128_0# sub 0.09468f
+C12 a_0_0# sub 0.09837f
+.ends
+
+.subckt nmos_bias_1 a_68_n36# a_204_n36# sub a_264_0# a_128_0# a_400_0# a_476_n36# a_536_0#
++ a_0_0# a_340_n36#
+X0 a_264_0# a_204_n36# a_128_0# sub sg13_lv_nmos ad=0.209p pd=1.48u as=0.209p ps=1.48u w=1.1u l=0.3u
+X1 a_400_0# a_340_n36# a_264_0# sub sg13_lv_nmos ad=0.209p pd=1.48u as=0.209p ps=1.48u w=1.1u l=0.3u
+X2 a_536_0# a_476_n36# a_400_0# sub sg13_lv_nmos ad=0.374p pd=2.88u as=0.209p ps=1.48u w=1.1u l=0.3u
+X3 a_128_0# a_68_n36# a_0_0# sub sg13_lv_nmos ad=0.209p pd=1.48u as=0.374p ps=2.88u w=1.1u l=0.3u
+C0 a_536_0# a_400_0# 0.03983f
+C1 a_128_0# a_264_0# 0.03983f
+C2 a_128_0# a_68_n36# 0.01388f
+C3 a_400_0# a_476_n36# 0.01388f
+C4 a_128_0# a_0_0# 0.03983f
+C5 a_264_0# a_340_n36# 0.01388f
+C6 a_400_0# a_340_n36# 0.01388f
+C7 a_400_0# a_264_0# 0.03983f
+C8 a_128_0# a_204_n36# 0.01388f
+C9 a_536_0# a_476_n36# 0.01388f
+C10 a_0_0# a_68_n36# 0.01388f
+C11 a_204_n36# a_264_0# 0.01388f
+C12 a_536_0# sub 0.09837f
+C13 a_400_0# sub 0.09468f
+C14 a_264_0# sub 0.08966f
+C15 a_128_0# sub 0.09468f
+C16 a_0_0# sub 0.09837f
+.ends
+
+.subckt pmos_bias a_68_n36# a_204_n36# w_n62_n62# sub a_264_0# a_128_0# a_400_0# a_476_n36#
++ a_536_0# a_0_0# a_340_n36#
+X0 a_264_0# a_204_n36# a_128_0# w_n62_n62# sg13_lv_pmos ad=0.627p pd=3.68u as=0.627p ps=3.68u w=3.3u l=0.3u
+X1 a_400_0# a_340_n36# a_264_0# w_n62_n62# sg13_lv_pmos ad=0.627p pd=3.68u as=0.627p ps=3.68u w=3.3u l=0.3u
+X2 a_536_0# a_476_n36# a_400_0# w_n62_n62# sg13_lv_pmos ad=1.122p pd=7.28u as=0.627p ps=3.68u w=3.3u l=0.3u
+X3 a_128_0# a_68_n36# a_0_0# w_n62_n62# sg13_lv_pmos ad=0.627p pd=3.68u as=1.122p ps=7.28u w=3.3u l=0.3u
+C0 a_68_n36# w_n62_n62# 0.11446f
+C1 a_400_0# a_264_0# 0.11949f
+C2 a_400_0# w_n62_n62# 0.02707f
+C3 a_400_0# a_536_0# 0.11949f
+C4 a_0_0# a_128_0# 0.11949f
+C5 a_400_0# a_476_n36# 0.04165f
+C6 a_0_0# w_n62_n62# 0.03373f
+C7 a_264_0# a_340_n36# 0.04165f
+C8 a_340_n36# w_n62_n62# 0.11178f
+C9 a_128_0# a_204_n36# 0.04165f
+C10 a_264_0# a_204_n36# 0.04165f
+C11 a_264_0# a_128_0# 0.11949f
+C12 w_n62_n62# a_204_n36# 0.11178f
+C13 a_0_0# a_68_n36# 0.04165f
+C14 w_n62_n62# a_128_0# 0.02707f
+C15 a_264_0# w_n62_n62# 0.02707f
+C16 a_536_0# w_n62_n62# 0.03373f
+C17 a_400_0# a_340_n36# 0.04165f
+C18 a_476_n36# w_n62_n62# 0.11446f
+C19 a_476_n36# a_536_0# 0.04165f
+C20 a_68_n36# a_128_0# 0.04165f
+C21 a_536_0# sub 0.13509f
+C22 a_400_0# sub 0.03755f
+C23 a_264_0# sub 0.03386f
+C24 a_128_0# sub 0.03755f
+C25 a_0_0# sub 0.13509f
+.ends
+
+.subckt BIAS_Block VDD VSS V_BIAS4 V_BIAS2 V_BIAS3 V_BIAS1 V_BIAS
+Xnmos_0 V_BIAS4 V_BIAS4 VSS V_BIAS4 VSS VSS V_BIAS4 V_BIAS4 nmos_bias
+Xnmos$1_0 V_BIAS3 V_BIAS3 VSS V_BIAS3 V_BIAS4 V_BIAS4 V_BIAS3 V_BIAS3 V_BIAS3 V_BIAS3
++ nmos_bias_1
+Xnmos$1_1 a_4_n525# a_4_n525# VSS VSS m1_1212_n584# m1_1212_n584# a_4_n525# VSS VSS
++ a_4_n525# nmos_bias_1
+Xnmos$1_2 a_4_n45# a_4_n45# VSS V_BIAS2 m1_1212_n584# m1_1212_n584# a_4_n45# V_BIAS2
++ V_BIAS2 a_4_n45# nmos_bias_1
+Xnmos$1_3 a_4_n525# a_4_n525# VSS a_4_n525# VSS VSS a_4_n525# a_4_n525# a_4_n525#
++ a_4_n525# nmos_bias_1
+Xnmos$1_4 a_4_n45# a_4_n45# VSS a_4_n525# a_4_n45# a_4_n45# a_4_n45# a_4_n525# a_4_n525#
++ a_4_n45# nmos_bias_1
+Xpmos_0 V_BIAS2 V_BIAS2 VDD VSS V_BIAS3 m1_2132_891# m1_2132_891# V_BIAS2 V_BIAS3
++ V_BIAS3 V_BIAS2 pmos_bias
+Xpmos_1 V_BIAS2 V_BIAS2 VDD VSS V_BIAS2 V_BIAS1 V_BIAS1 V_BIAS2 V_BIAS2 V_BIAS2 V_BIAS2
++ pmos_bias
+Xpmos_2 V_BIAS1 V_BIAS1 VDD VSS VDD m1_2132_891# m1_2132_891# V_BIAS1 VDD VDD V_BIAS1
++ pmos_bias
+Xpmos_3 V_BIAS1 V_BIAS1 VDD VSS VDD V_BIAS1 V_BIAS1 V_BIAS1 VDD VDD V_BIAS1 pmos_bias
+Xpmos_4 V_BIAS V_BIAS VDD VSS VDD a_4_n45# a_4_n45# V_BIAS VDD VDD V_BIAS pmos_bias
+C0 a_4_n525# a_4_n45# 0.27843f
+C1 a_4_n525# m1_1212_n584# 0.21927f
+C2 V_BIAS a_4_n45# 0.07636f
+C3 V_BIAS VDD 0.57543f
+C4 V_BIAS2 m1_2132_891# 0.24499f
+C5 a_4_n45# V_BIAS1 0.01081f
+C6 V_BIAS1 VDD 1.91799f
+C7 V_BIAS3 V_BIAS2 0.16981f
+C8 a_4_n525# V_BIAS2 0.01616f
+C9 V_BIAS3 m1_2132_891# 0.03913f
+C10 a_4_n45# VDD 0.27362f
+C11 a_4_n45# m1_1212_n584# 0.05596f
+C12 V_BIAS2 V_BIAS1 0.4511f
+C13 V_BIAS1 m1_2132_891# 0.0557f
+C14 V_BIAS2 a_4_n45# 0.29314f
+C15 V_BIAS2 VDD 1.12471f
+C16 V_BIAS2 m1_1212_n584# 0.0307f
+C17 VDD m1_2132_891# 0.18626f
+C18 V_BIAS3 V_BIAS4 0.13059f
+C19 V_BIAS3 VDD 0.28568f
+C20 V_BIAS VSS -0.07283f
+C21 VDD VSS -0.13979f
+C22 V_BIAS1 VSS -0.25602f
+C23 V_BIAS2 VSS -0.33216f
+C24 m1_2132_891# VSS -0.04377f
+C25 a_4_n525# VSS 0.71726f
+C26 a_4_n45# VSS 0.37602f
+C27 m1_1212_n584# VSS 0.10146f
+C28 V_BIAS4 VSS 0.26739f
+.ends
+

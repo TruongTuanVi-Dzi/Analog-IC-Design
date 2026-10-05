@@ -1,0 +1,161 @@
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/LAYOUT/SCHEMATIC_FOR_LAYOUT/All_Block_LAYOUT.sch
+**.subckt All_Block_LAYOUT
+VDD VDD VSS 1.2
+VSS VSS 0 0.0
+V_IN V_IN VSS DC 0.6 AC -1.0
+V_IP V_IP VSS DC 0.6 AC 1.0
+V_BIAS V_BIAS VSS DC 0.7
+V_CM VCM VSS DC 0.4
+CL1 VOP VON 2p
+x1 VDD VSS V_BIAS4 V_BIAS2 V_BIAS3 V_BIAS1 V_BIAS BIAS_Block
+x2 VON VOP V_ON1 V_OP1 V_IN V_IP V_BIAS1 VSS V_BIAS4 V_BIAS1 VCMFBG VDD V_BIAS2 CASCODE_Block
+x3 VDD V_BIAS1 VOP VON VCM VCMFBG VCMFBL VSS CMFB_Block
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+.lib cornerCAP.lib cap_typ
+.lib cornerRES.lib res_typ
+
+
+
+
+.control
+unset echo
+set color0=white
+set color1=black
+
+* ============================================================
+* 1. DC, CONG SUAT & OUTPUT COMMON-MODE
+* ============================================================
+op
+let p_total = -v(VDD)*i(vdd)
+let vocm = 0.5 * (v(vop) + v(von))
+set r_vocm = $&vocm
+set r_ptotal = $&p_total
+
+* ============================================================
+* 2. AC VI SAI: GAIN, GBW, PHASE MARGIN
+* ============================================================
+alter @v_ip[acmag] = 0.5
+alter @v_in[acmag] = -0.5
+alter @vdd[acmag] = 0
+
+ac dec 50 1 10G
+let vod = v(vop) - v(von)
+let vid = v(v_ip) - v(v_in)
+let gain_db = db(vod/vid)
+let phase_deg = 180/PI * cph(vod/vid)
+
+meas ac adm_dc find gain_db at=1
+meas ac GBW when gain_db=0
+meas ac Phase_at_GBW find phase_deg at=GBW
+let Phase_Margin = 180 + Phase_at_GBW
+
+set r_gain = $&adm_dc
+set r_gbw_mhz = $&GBW
+set r_pm = $&Phase_Margin
+
+* ============================================================
+* 3. NOISE NGO VAO TAI 1 MHz (DA SUA TRIET DE LOI SCALAR)
+* ============================================================
+noise v(vop,von) v_ip dec 10 1Meg 1Meg
+let noise_val = noise1.inoise_spectrum
+set r_noise = $&noise_val
+
+* ============================================================
+* 4. CMRR TAI DC
+* ============================================================
+alter @v_ip[acmag] = 1.0
+alter @v_in[acmag] = 1.0
+alter @vdd[acmag] = 0
+
+ac dec 20 1 10Meg
+let vocm_ac = 0.5 * (v(vop) + v(von))
+let vicm_ac = v(v_ip)
+let acm_db = db(vocm_ac / vicm_ac)
+let cmrr_val = $r_gain - acm_db[0]
+set r_cmrr = $&cmrr_val
+
+* ============================================================
+* 5. PSRR TAI DC
+* ============================================================
+alter @v_ip[acmag] = 0
+alter @v_in[acmag] = 0
+alter @vdd[acmag] = 1.0
+
+ac dec 20 1 10Meg
+let vod_psrr = v(vop) - v(von)
+let asupply_db = db(vod_psrr)
+let psrr_val = $r_gain - asupply_db[0]
+set r_psrr = $&psrr_val
+
+* ============================================================
+* 6. TRANSIENT: SLEW RATE & OUTPUT SWING
+* ============================================================
+alter @vdd[acmag] = 0
+alter @v_ip[acmag] = 0
+alter @v_in[acmag] = 0
+
+alter @v_ip[pulse] = [ 0.2 1.0 10n 0.1n 0.1n 40n 100n ]
+alter @v_in[pulse] = [ 1.0 0.2 10n 0.1n 0.1n 40n 100n ]
+
+tran 0.1n 100n
+let v_diff = v(vop) - v(von)
+
+meas tran v_max max v_diff
+meas tran v_min min v_diff
+let v_diff_pp = v_max - v_min
+set r_swing = $&v_diff_pp
+
+meas tran t1 when v_diff=-0.2 cross=1
+meas tran t2 when v_diff=0.2 cross=1
+let sr_rise = (0.4) / (t2 - t1) / 1e6
+
+meas tran t3 when v_diff=0.2 cross=2
+meas tran t4 when v_diff=-0.2 cross=2
+let sr_fall = (0.4) / (t4 - t3) / 1e6
+let sr_avg = 0.5 * (sr_rise + sr_fall)
+set r_sr = $&sr_avg
+
+* ============================================================
+* BANG TONG HOP KET QUA HOAN CHINH (FINAL PROJECT)
+* ============================================================
+echo ''
+echo '=========================================================================='
+echo '                   TARGET SPECIFICATIONS FINAL PROJECT (POST-LAYOUT)                   '
+echo '=========================================================================='
+echo '1. DC Gain (dB)          [Target >= 75 dB]      : ' $r_gain 'dB'
+echo '2. GBW (Hz)              [Target >= 200 MHz]    : ' $r_gbw_mhz 'Hz'
+echo '3. Phase Margin (deg)    [Target >= 60 deg]     : ' $r_pm 'deg'
+echo '4. Power (W)             [Target < 3.0 mW]      : ' $r_ptotal 'W'
+echo '5. Output CM (V)         [Target = 0.60 V]      : ' $r_vocm 'V'
+echo '6. Noise @ 1MHz (V/rtHz) [Target < 15 nV/rtHz]  : ' $r_noise 'V/rtHz'
+echo '7. CMRR @ DC (dB)        [Target > 80 dB]       : ' $r_cmrr 'dB'
+echo '8. PSRR @ DC (dB)        [Target > 70 dB]       : ' $r_psrr 'dB'
+echo '9. Slew Rate (V/us)      [Target > 100 V/us]    : ' $r_sr 'V/us'
+echo '10. Output Swing (Vpp)   [Target > 1.0 Vpp]     : ' $r_swing 'Vpp'
+echo '=========================================================================='
+echo ''
+
+.endc
+
+
+
+
+.inc /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/LAYOUT/BIAS_Block/BIAS_Block.spice
+
+
+
+
+.inc /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/LAYOUT/CASCODE_Block/CASCODE_Block.spice
+
+
+
+
+.inc /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/LAYOUT/CMFB_Block/CMFB_Block.spice
+
+
+**** end user architecture code
+**.ends
+.end

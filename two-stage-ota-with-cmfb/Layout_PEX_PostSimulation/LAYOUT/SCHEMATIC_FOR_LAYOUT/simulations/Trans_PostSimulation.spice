@@ -1,0 +1,81 @@
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/LAYOUT/SCHEMATIC_FOR_LAYOUT/Trans_PostSimulation.sch
+**.subckt Trans_PostSimulation
+VDD VDD VSS 1.2
+VSS VSS 0 0.0
+V_IN V_IN VSS DC 0.6 AC -1.0
+V_IP V_IP VSS DC 0.6 AC 1.0
+V_BIAS V_BIAS VSS DC 0.7
+V_CM VCM VSS DC 0.4
+CL1 VOP VON 2p
+x1 VDD VSS V_BIAS4 V_BIAS2 V_BIAS3 V_BIAS1 V_BIAS BIAS_Block
+x2 VON VOP V_ON1 V_OP1 V_IN V_IP V_BIAS1 VSS V_BIAS4 V_BIAS1 VCMFBG VDD V_BIAS2 CASCODE_Block
+x3 VDD V_BIAS1 VOP VON VCM VCMFBG VCMFBL VSS CMFB_Block
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+.lib cornerCAP.lib cap_typ
+.lib cornerRES.lib res_typ
+
+
+
+
+.inc /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/LAYOUT/BIAS_Block/BIAS_Block.spice
+
+
+
+
+.inc /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/LAYOUT/CASCODE_Block/CASCODE_Block.spice
+
+
+
+
+.inc /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/LAYOUT/CMFB_Block/CMFB_Block.spice
+
+
+
+
+* RUN STEP RESPONSE
+.control
+set color0=white
+set color1=black
+
+* Xung buoc nhay 0.5Vpp
+alter @v_ip[pulse] = [ 0.475 0.725 10n 0.1n 0.1n 50n 100n ]
+alter @v_in[pulse] = [ 0.725 0.475 10n 0.1n 0.1n 50n 100n ]
+
+tran 20p 120n
+
+let v_out_diff = v(vop) - v(von)
+let v_in_diff  = v(v_ip) - v(v_in)
+let sr_trace   = deriv(v_out_diff) / 1e6
+
+* Do Slew Rate 20% - 80%
+meas tran t_r20 when v_out_diff=-0.15 rise=1
+meas tran t_r80 when v_out_diff=0.15 rise=1
+let sr_rise = (0.3 / (t_r80 - t_r20)) / 1e6
+
+meas tran t_f80 when v_out_diff=0.15 fall=1
+meas tran t_f20 when v_out_diff=-0.15 fall=1
+let sr_fall = (0.3 / (t_f20 - t_f80)) / 1e6
+
+* Do Overshoot
+meas tran v_max max v_out_diff from=10n to=60n
+let overshoot_pct = ((v_max - 0.25) / 0.25) * 100
+
+* Do Settling Time
+meas tran t_settle_1pct when v_out_diff=0.2475 rise=1
+meas tran t_settle_01pct when v_out_diff=0.24975 rise=1
+
+print sr_rise sr_fall
+print overshoot_pct
+print t_settle_1pct t_settle_01pct
+
+plot v_in_diff v_out_diff ylabel 'Voltage (V)' xlabel 'Time (s)' title 'Large-Signal Step Response'
+plot sr_trace ylabel 'Slew Rate (V/us)' xlabel 'Time (s)' title 'Instantaneous Slew Rate'
+.endc
+
+
+**** end user architecture code
+**.ends
+.end

@@ -1,0 +1,12 @@
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/LAYOUT/SCHEMATIC_FOR_LAYOUT/CMFB_Block/CMFB_Block.sch
+.subckt CMFB_Block VDD V_BIAS1 V_OP V_ON VCM VCMFBG VCMFBL VSS
+*.PININFO V_OP:I V_ON:I V_BIAS1:I VCMFBL:B VCMFBG:B VSS:B VDD:B VCM:B
+MM14 net2 V_BIAS1 VDD VDD sg13_lv_pmos w=48.0u l=0.3u ng=16
+MM15 net1 V_BIAS1 VDD VDD sg13_lv_pmos w=48.0u l=0.3u ng=16
+MM16 VCMFBG V_OP net1 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+MM17 VCMFBL VCM net1 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+MM18 VCMFBL VCM net2 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+MM19 VCMFBG V_ON net2 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+MM20 VCMFBL VCMFBL VSS VSS sg13_lv_nmos w=7.2u l=0.3u ng=6
+MM21 VCMFBG VCMFBG VSS VSS sg13_lv_nmos w=7.2u l=0.3u ng=6
+.ends

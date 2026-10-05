@@ -1,0 +1,34 @@
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/CASCODE_Block/CASCODE_Block.sch
+**.subckt CASCODE_Block VDD V_BIAS1 V_IN V_IP V_BIAS2 V_ON1 V_OP1 V_BIAS3 V_ON2 V_OP2 VCMFBG V_BIAS4 VSS
+*.iopin VDD
+*.ipin V_IN
+*.ipin V_IP
+*.iopin VSS
+*.ipin V_BIAS2
+*.ipin V_BIAS1
+*.ipin VCMFBG
+*.opin V_ON1
+*.opin V_OP1
+*.ipin V_BIAS3
+*.ipin V_BIAS4
+*.opin V_ON2
+*.opin V_OP2
+M5 V_ON1 V_BIAS3 net4 VSS sg13_lv_nmos w=30u l=0.5u ng=10
+M6 V_OP1 V_BIAS3 net5 VSS sg13_lv_nmos w=30u l=0.5u ng=10
+M7 net4 VCMFBG VSS VSS sg13_lv_nmos w=30u l=0.6u ng=10
+M8 net5 VCMFBG VSS VSS sg13_lv_nmos w=30u l=0.6u ng=10
+M1 net2 V_IN net1 VDD sg13_lv_pmos w=120u l=0.45u ng=40 m=2
+M2 net3 V_IP net1 VDD sg13_lv_pmos w=120u l=0.45u ng=40 m=2
+M3 V_ON1 V_BIAS2 net2 VDD sg13_lv_pmos w=135u l=0.5u ng=45
+M4 V_OP1 V_BIAS2 net3 VDD sg13_lv_pmos w=135u l=0.5u ng=45
+M0 net1 V_BIAS1 VDD VDD sg13_lv_pmos w=120u l=0.45u ng=40
+M_CS1 V_ON2 V_ON1 VDD VDD sg13_lv_pmos w=120u l=0.5u ng=40
+M_CS2 V_OP2 V_OP1 VDD VDD sg13_lv_pmos w=120u l=0.5u ng=40
+M_L1 V_ON2 V_BIAS4 VSS VSS sg13_lv_nmos w=80u l=0.5u ng=10
+M_L2 V_OP2 V_BIAS4 VSS VSS sg13_lv_nmos w=80u l=0.5u ng=10
+R2 V_ON1 net6 0.9k
+C1 net6 V_ON2 3p
+R1 V_OP1 net7 0.9k
+C2 net7 V_OP2 3p
+**.ends
+.end

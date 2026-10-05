@@ -1,0 +1,182 @@
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/LAYOUT/SCHEMATIC_FOR_LAYOUT/AC_postSimulation.sch
+**.subckt AC_postSimulation
+VDD VDD VSS 1.2
+VSS VSS 0 0.0
+V_IN V_IN VSS DC 0.6 AC -1.0
+V_IP V_IP VSS DC 0.6 AC 1.0
+V_BIAS V_BIAS VSS DC 0.7
+V_CM VCM VSS DC 0.4
+CL1 VOP VON 2p
+x1 VDD VSS V_BIAS4 V_BIAS2 V_BIAS3 V_BIAS1 V_BIAS BIAS_Block
+x2 VON VOP V_ON1 V_OP1 V_IN V_IP V_BIAS1 VSS V_BIAS4 V_BIAS1 VCMFBG VDD V_BIAS2 CASCODE_Block
+x3 VDD V_BIAS1 VOP VON VCM VCMFBG VCMFBL VSS CMFB_Block
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+.lib cornerCAP.lib cap_typ
+.lib cornerRES.lib res_typ
+
+
+
+
+.inc /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/LAYOUT/BIAS_Block/BIAS_Block.spice
+
+
+
+
+.inc /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/LAYOUT/CASCODE_Block/CASCODE_Block.spice
+
+
+
+
+.inc /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/LAYOUT/CMFB_Block/CMFB_Block.spice
+
+
+
+
+* ==============================================================================
+* TESTBENCH CHO MUC B: AC ANALYSIS (OPEN-LOOP, DIFFERENTIAL MODE)
+* ==============================================================================
+
+.control
+set color0=white
+set color1=black
+
+echo '=========================================================================='
+echo '  B1 & B2. DIFFERENTIAL OPEN-LOOP AC ANALYSIS (BODE, GAIN, GBW, PM, GM)  '
+echo '=========================================================================='
+
+* 1. Thiet lap nguon vi sai: vip = +0.5V, vin = -0.5V (Total AC input = 1V)
+alter @v_ip[acmag] = 0.5
+alter @v_in[acmag] = -0.5
+alter @vdd[acmag]  = 0.0
+alter @vss[acmag]  = 0.0
+
+* Chay phan tich AC tu 1 Hz den 10 GHz (10 diem/decade)
+ac dec 20 1 10G
+
+* Tinh do loi vi sai (Magnitude va Phase)
+let v_out_diff = v(vop) - v(von)
+let gain_db = db(v_out_diff)
+let phase_deg = (180 / pi) * unwrap(ph(v_out_diff))
+
+setplot ac1
+let avd_db = gain_db
+let f_axis = frequency
+
+* --- Tu dong trich xuat cac thong so dac trung ---
+* 1. DC Gain (Av0 o tan so thap nhat f = 1Hz)
+let av0 = gain_db[0]
+
+* 2. Tim UGF / GBW (Tan so ma Gain = 0 dB)
+meas ac gbw when gain_db=0
+
+* 3. Tim Phase Margin (PM = Phase tai tan so UGF - (-180))
+* Luu y: Voi OTA dao pha 180 do o tan so thap, PM thuong tinh bang: 180 + phase
+meas ac phase_at_ugf find phase_deg when gain_db=0
+let pm = 180 + phase_at_ugf
+
+* 4. Tim Gain Margin (GM: Do sut giam Gain khi Pha cham -180 do)
+meas ac f_180 when phase_deg=-180
+meas ac gain_at_180 find gain_db when phase_deg=-180
+let gm = -gain_at_180
+
+echo '--------------------------------------------------------------------------'
+echo '                    KET QUA TRICH XUAT OPEN-LOOP AC                       '
+echo '--------------------------------------------------------------------------'
+print av0
+print gbw
+print pm
+print gm
+echo '--------------------------------------------------------------------------'
+
+* Ve do thi Bode Plot (Magnitude & Phase)
+plot gain_db ylabel 'Magnitude (dB)' title 'Bode Plot: Differential Gain'
+plot phase_deg ylabel 'Phase (Degrees)' title 'Bode Plot: Differential Phase'
+
+
+echo '=========================================================================='
+echo '  B3. COMMON-MODE REJECTION RATIO (CMRR vs. FREQUENCY)                   '
+echo '=========================================================================='
+
+* 2. Thiet lap nguon che do chung: vip = 1V, vin = 1V
+alter @v_ip[acmag] = 1.0
+alter @v_in[acmag] = 1.0
+alter @vdd[acmag]  = 0.0
+alter @vss[acmag]  = 0.0
+
+ac dec 20 1 10G
+
+* Do loi che do chung (Common-Mode Gain)
+let v_out_cm = v(vop) - v(von)
+let avc_db = db(v_out_cm)
+
+* Tinh CMRR (dB) = Avd(dB) - Avc(dB)
+let cmrr_db = ac1.avd_db - avc_db
+
+meas ac cmrr_dc find cmrr_db at=1
+meas ac cmrr_1mhz find cmrr_db at=1Meg
+
+echo '--------------------------------------------------------------------------'
+print cmrr_dc cmrr_1mhz
+echo '--------------------------------------------------------------------------'
+
+plot cmrr_db ylabel 'CMRR (dB)' title 'Common-Mode Rejection Ratio (CMRR) vs. Frequency'
+
+
+echo '=========================================================================='
+echo '  B3. POWER SUPPLY REJECTION RATIO (PSRR vs. FREQUENCY)                  '
+echo '=========================================================================='
+
+* --- a. PSRR cua nguon VDD ---
+* Tat AC ngo vao, kich thich nguon VDD
+alter @v_ip[acmag] = 0.0
+alter @v_in[acmag] = 0.0
+alter @vdd[acmag]  = 1.0
+alter @vss[acmag]  = 0.0
+
+ac dec 20 1 10G
+
+let v_out_vdd = v(vop) - v(von)
+let a_vdd_db = db(v_out_vdd)
+let psrr_vdd_db = ac1.avd_db - a_vdd_db
+
+meas ac psrr_vdd_dc find psrr_vdd_db at=1
+meas ac psrr_vdd_1mhz find psrr_vdd_db at=1Meg
+
+echo '--------------------------------------------------------------------------'
+echo 'PSRR+ (VDD):'
+print psrr_vdd_dc psrr_vdd_1mhz
+echo '--------------------------------------------------------------------------'
+
+plot psrr_vdd_db ylabel 'PSRR VDD (dB)' title 'PSRR+ (VDD) vs. Frequency'
+
+
+* --- b. PSRR cua nguon VSS ---
+* Tat AC VDD, kich thich nguon VSS
+alter @vdd[acmag]  = 0.0
+alter @vss[acmag]  = 1.0
+
+ac dec 20 1 10G
+
+let v_out_vss = v(vop) - v(von)
+let a_vss_db = db(v_out_vss)
+let psrr_vss_db = ac1.avd_db - a_vss_db
+
+meas ac psrr_vss_dc find psrr_vss_db at=1
+meas ac psrr_vss_1mhz find psrr_vss_db at=1Meg
+
+echo '--------------------------------------------------------------------------'
+echo 'PSRR- (VSS):'
+print psrr_vss_dc psrr_vss_1mhz
+echo '--------------------------------------------------------------------------'
+
+plot psrr_vss_db ylabel 'PSRR VSS (dB)' title 'PSRR- (VSS) vs. Frequency'
+
+.endc
+
+
+**** end user architecture code
+**.ends
+.end

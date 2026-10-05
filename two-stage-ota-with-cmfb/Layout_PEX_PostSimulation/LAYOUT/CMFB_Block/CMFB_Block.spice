@@ -1,0 +1,269 @@
+* NGSPICE file created from CMFB_Block.ext - technology: ihp-sg13g2
+
+.subckt pmos_cmfb_4 a_68_n36# w_n62_n62# sub a_128_0# a_0_0#
+X0 a_128_0# a_68_n36# a_0_0# w_n62_n62# sg13_lv_pmos ad=0.408p pd=3.08u as=0.408p ps=3.08u w=1.2u l=0.3u
+C0 w_n62_n62# a_128_0# 0.01292f
+C1 a_0_0# a_128_0# 0.04345f
+C2 a_0_0# w_n62_n62# 0.01292f
+C3 a_68_n36# a_128_0# 0.01514f
+C4 a_68_n36# w_n62_n62# 0.06206f
+C5 a_68_n36# a_0_0# 0.01514f
+C6 a_128_0# sub 0.06941f
+C7 a_0_0# sub 0.06941f
+.ends
+
+.subckt nmos_cmfb_1 a_68_n36# a_204_n36# sub a_264_0# a_128_0# a_400_0# a_0_0# a_340_n36#
+X0 a_264_0# a_204_n36# a_128_0# sub sg13_lv_nmos ad=0.228p pd=1.58u as=0.228p ps=1.58u w=1.2u l=0.3u
+X1 a_400_0# a_340_n36# a_264_0# sub sg13_lv_nmos ad=0.408p pd=3.08u as=0.228p ps=1.58u w=1.2u l=0.3u
+X2 a_128_0# a_68_n36# a_0_0# sub sg13_lv_nmos ad=0.228p pd=1.58u as=0.408p ps=3.08u w=1.2u l=0.3u
+C0 a_204_n36# a_264_0# 0.01514f
+C1 a_340_n36# a_400_0# 0.01514f
+C2 a_68_n36# a_0_0# 0.01514f
+C3 a_400_0# a_264_0# 0.04345f
+C4 a_0_0# a_128_0# 0.04345f
+C5 a_68_n36# a_128_0# 0.01514f
+C6 a_340_n36# a_264_0# 0.01514f
+C7 a_264_0# a_128_0# 0.04345f
+C8 a_204_n36# a_128_0# 0.01514f
+C9 a_400_0# sub 0.10352f
+C10 a_264_0# sub 0.0973f
+C11 a_128_0# sub 0.0973f
+C12 a_0_0# sub 0.10352f
+.ends
+
+.subckt pmos_cmfb_3 a_68_n36# w_n62_n62# sub a_128_0# a_0_0#
+X0 a_128_0# a_68_n36# a_0_0# w_n62_n62# sg13_lv_pmos ad=1.02p pd=6.68u as=1.02p ps=6.68u w=3u l=0.3u
+C0 w_n62_n62# a_128_0# 0.03053f
+C1 a_0_0# a_128_0# 0.10863f
+C2 a_0_0# w_n62_n62# 0.03053f
+C3 a_68_n36# a_128_0# 0.03786f
+C4 a_68_n36# w_n62_n62# 0.10927f
+C5 a_68_n36# a_0_0# 0.03786f
+C6 a_128_0# sub 0.12886f
+C7 a_0_0# sub 0.12886f
+.ends
+
+.subckt pmos_cmfb a_68_n36# a_204_n36# w_n62_n62# sub a_264_0# a_128_0# a_400_0# a_0_0#
++ a_340_n36#
+X0 a_264_0# a_204_n36# a_128_0# w_n62_n62# sg13_lv_pmos ad=0.228p pd=1.58u as=0.228p ps=1.58u w=1.2u l=0.3u
+X1 a_400_0# a_340_n36# a_264_0# w_n62_n62# sg13_lv_pmos ad=0.408p pd=3.08u as=0.228p ps=1.58u w=1.2u l=0.3u
+X2 a_128_0# a_68_n36# a_0_0# w_n62_n62# sg13_lv_pmos ad=0.228p pd=1.58u as=0.408p ps=3.08u w=1.2u l=0.3u
+C0 a_264_0# w_n62_n62# 0.01017f
+C1 a_68_n36# a_128_0# 0.01514f
+C2 a_204_n36# a_264_0# 0.01514f
+C3 w_n62_n62# a_340_n36# 0.05938f
+C4 a_264_0# a_128_0# 0.04345f
+C5 a_264_0# a_400_0# 0.04345f
+C6 a_204_n36# w_n62_n62# 0.05669f
+C7 a_400_0# a_340_n36# 0.01514f
+C8 w_n62_n62# a_0_0# 0.01292f
+C9 w_n62_n62# a_128_0# 0.01017f
+C10 a_400_0# w_n62_n62# 0.01292f
+C11 a_204_n36# a_128_0# 0.01514f
+C12 a_68_n36# w_n62_n62# 0.05938f
+C13 a_128_0# a_0_0# 0.04345f
+C14 a_264_0# a_340_n36# 0.01514f
+C15 a_68_n36# a_0_0# 0.01514f
+C16 a_400_0# sub 0.06572f
+C17 a_264_0# sub 0.03755f
+C18 a_128_0# sub 0.03755f
+C19 a_0_0# sub 0.06572f
+.ends
+
+.subckt pmos_cmfb_1 a_1624_0# a_944_0# a_1896_0# a_2108_n36# a_1836_n36# a_1564_n36# a_808_0#
++ a_1292_n36# a_68_n36# a_2032_0# a_204_n36# w_n62_n62# a_1700_n36# a_1080_0# a_2168_0#
++ a_1428_n36# a_1156_n36# sub a_884_n36# a_264_0# a_128_0# a_400_0# a_1020_n36# a_1352_0#
++ a_672_0# a_748_n36# a_476_n36# a_1216_0# a_536_0# a_0_0# a_1972_n36# a_1488_0# a_1760_0#
++ a_612_n36# a_340_n36#
+X0 a_264_0# a_204_n36# a_128_0# w_n62_n62# sg13_lv_pmos ad=0.57p pd=3.38u as=0.57p ps=3.38u w=3u l=0.3u
+X1 a_2032_0# a_1972_n36# a_1896_0# w_n62_n62# sg13_lv_pmos ad=0.57p pd=3.38u as=0.57p ps=3.38u w=3u l=0.3u
+X2 a_400_0# a_340_n36# a_264_0# w_n62_n62# sg13_lv_pmos ad=0.57p pd=3.38u as=0.57p ps=3.38u w=3u l=0.3u
+X3 a_672_0# a_612_n36# a_536_0# w_n62_n62# sg13_lv_pmos ad=0.57p pd=3.38u as=0.57p ps=3.38u w=3u l=0.3u
+X4 a_1080_0# a_1020_n36# a_944_0# w_n62_n62# sg13_lv_pmos ad=0.57p pd=3.38u as=0.57p ps=3.38u w=3u l=0.3u
+X5 a_536_0# a_476_n36# a_400_0# w_n62_n62# sg13_lv_pmos ad=0.57p pd=3.38u as=0.57p ps=3.38u w=3u l=0.3u
+X6 a_1216_0# a_1156_n36# a_1080_0# w_n62_n62# sg13_lv_pmos ad=0.57p pd=3.38u as=0.57p ps=3.38u w=3u l=0.3u
+X7 a_1488_0# a_1428_n36# a_1352_0# w_n62_n62# sg13_lv_pmos ad=0.57p pd=3.38u as=0.57p ps=3.38u w=3u l=0.3u
+X8 a_808_0# a_748_n36# a_672_0# w_n62_n62# sg13_lv_pmos ad=0.57p pd=3.38u as=0.57p ps=3.38u w=3u l=0.3u
+X9 a_1760_0# a_1700_n36# a_1624_0# w_n62_n62# sg13_lv_pmos ad=0.57p pd=3.38u as=0.57p ps=3.38u w=3u l=0.3u
+X10 a_128_0# a_68_n36# a_0_0# w_n62_n62# sg13_lv_pmos ad=0.57p pd=3.38u as=1.02p ps=6.68u w=3u l=0.3u
+X11 a_1352_0# a_1292_n36# a_1216_0# w_n62_n62# sg13_lv_pmos ad=0.57p pd=3.38u as=0.57p ps=3.38u w=3u l=0.3u
+X12 a_944_0# a_884_n36# a_808_0# w_n62_n62# sg13_lv_pmos ad=0.57p pd=3.38u as=0.57p ps=3.38u w=3u l=0.3u
+X13 a_1624_0# a_1564_n36# a_1488_0# w_n62_n62# sg13_lv_pmos ad=0.57p pd=3.38u as=0.57p ps=3.38u w=3u l=0.3u
+X14 a_2168_0# a_2108_n36# a_2032_0# w_n62_n62# sg13_lv_pmos ad=1.02p pd=6.68u as=0.57p ps=3.38u w=3u l=0.3u
+X15 a_1896_0# a_1836_n36# a_1760_0# w_n62_n62# sg13_lv_pmos ad=0.57p pd=3.38u as=0.57p ps=3.38u w=3u l=0.3u
+C0 w_n62_n62# a_1428_n36# 0.10391f
+C1 a_2108_n36# w_n62_n62# 0.10659f
+C2 a_1488_0# a_1428_n36# 0.03786f
+C3 a_536_0# a_672_0# 0.10863f
+C4 a_1700_n36# a_1760_0# 0.03786f
+C5 a_2032_0# a_2168_0# 0.10863f
+C6 a_264_0# w_n62_n62# 0.02425f
+C7 a_1624_0# a_1564_n36# 0.03786f
+C8 a_748_n36# w_n62_n62# 0.10391f
+C9 a_1760_0# w_n62_n62# 0.02425f
+C10 a_808_0# a_944_0# 0.10863f
+C11 a_204_n36# a_264_0# 0.03786f
+C12 a_1080_0# a_1156_n36# 0.03786f
+C13 a_672_0# a_612_n36# 0.03786f
+C14 a_808_0# w_n62_n62# 0.02425f
+C15 a_128_0# a_264_0# 0.10863f
+C16 a_2108_n36# a_2032_0# 0.03786f
+C17 a_1080_0# a_1216_0# 0.10863f
+C18 a_400_0# a_340_n36# 0.03786f
+C19 a_1352_0# w_n62_n62# 0.02425f
+C20 a_1352_0# a_1488_0# 0.10863f
+C21 a_1292_n36# a_1352_0# 0.03786f
+C22 a_0_0# w_n62_n62# 0.03053f
+C23 w_n62_n62# a_340_n36# 0.10391f
+C24 a_400_0# w_n62_n62# 0.02425f
+C25 a_1896_0# w_n62_n62# 0.02425f
+C26 a_0_0# a_128_0# 0.10863f
+C27 a_1624_0# a_1760_0# 0.10863f
+C28 a_1700_n36# w_n62_n62# 0.10391f
+C29 a_1216_0# a_1156_n36# 0.03786f
+C30 a_944_0# w_n62_n62# 0.02425f
+C31 a_884_n36# a_808_0# 0.03786f
+C32 a_2108_n36# a_2168_0# 0.03786f
+C33 a_1488_0# w_n62_n62# 0.02425f
+C34 a_400_0# a_476_n36# 0.03786f
+C35 a_1292_n36# w_n62_n62# 0.10391f
+C36 a_400_0# a_536_0# 0.10863f
+C37 a_204_n36# w_n62_n62# 0.10391f
+C38 a_748_n36# a_672_0# 0.03786f
+C39 a_1896_0# a_2032_0# 0.10863f
+C40 a_128_0# w_n62_n62# 0.02425f
+C41 a_944_0# a_1020_n36# 0.03786f
+C42 a_672_0# a_808_0# 0.10863f
+C43 a_1836_n36# a_1760_0# 0.03786f
+C44 a_204_n36# a_128_0# 0.03786f
+C45 w_n62_n62# a_476_n36# 0.10391f
+C46 w_n62_n62# a_1020_n36# 0.10391f
+C47 a_536_0# w_n62_n62# 0.02425f
+C48 a_2032_0# w_n62_n62# 0.02425f
+C49 a_1972_n36# a_1896_0# 0.03786f
+C50 a_944_0# a_1080_0# 0.10863f
+C51 a_68_n36# a_0_0# 0.03786f
+C52 a_1080_0# w_n62_n62# 0.02425f
+C53 a_1700_n36# a_1624_0# 0.03786f
+C54 a_884_n36# a_944_0# 0.03786f
+C55 a_1216_0# a_1352_0# 0.10863f
+C56 w_n62_n62# a_612_n36# 0.10391f
+C57 a_1972_n36# w_n62_n62# 0.10391f
+C58 a_884_n36# w_n62_n62# 0.10391f
+C59 a_1352_0# a_1428_n36# 0.03786f
+C60 a_1624_0# w_n62_n62# 0.02425f
+C61 a_536_0# a_476_n36# 0.03786f
+C62 a_748_n36# a_808_0# 0.03786f
+C63 a_1488_0# a_1624_0# 0.10863f
+C64 a_1564_n36# w_n62_n62# 0.10391f
+C65 a_1488_0# a_1564_n36# 0.03786f
+C66 a_1080_0# a_1020_n36# 0.03786f
+C67 a_1836_n36# a_1896_0# 0.03786f
+C68 a_68_n36# w_n62_n62# 0.10659f
+C69 a_536_0# a_612_n36# 0.03786f
+C70 a_672_0# w_n62_n62# 0.02425f
+C71 a_2168_0# w_n62_n62# 0.03053f
+C72 a_1972_n36# a_2032_0# 0.03786f
+C73 a_264_0# a_340_n36# 0.03786f
+C74 w_n62_n62# a_1156_n36# 0.10391f
+C75 a_68_n36# a_128_0# 0.03786f
+C76 a_1836_n36# w_n62_n62# 0.10391f
+C77 a_1216_0# w_n62_n62# 0.02425f
+C78 a_264_0# a_400_0# 0.10863f
+C79 a_1292_n36# a_1216_0# 0.03786f
+C80 a_1760_0# a_1896_0# 0.10863f
+C81 a_2168_0# sub 0.12518f
+C82 a_2032_0# sub 0.03755f
+C83 a_1896_0# sub 0.03386f
+C84 a_1760_0# sub 0.03386f
+C85 a_1624_0# sub 0.03386f
+C86 a_1488_0# sub 0.03386f
+C87 a_1352_0# sub 0.03386f
+C88 a_1216_0# sub 0.03386f
+C89 a_1080_0# sub 0.03386f
+C90 a_944_0# sub 0.03386f
+C91 a_808_0# sub 0.03386f
+C92 a_672_0# sub 0.03386f
+C93 a_536_0# sub 0.03386f
+C94 a_400_0# sub 0.03386f
+C95 a_264_0# sub 0.03386f
+C96 a_128_0# sub 0.03755f
+C97 a_0_0# sub 0.12518f
+.ends
+
+.subckt nmos_cmfb_2 a_68_n36# sub a_128_0# a_0_0#
+X0 a_128_0# a_68_n36# a_0_0# sub sg13_lv_nmos ad=0.408p pd=3.08u as=0.408p ps=3.08u w=1.2u l=0.3u
+C0 a_68_n36# a_128_0# 0.01514f
+C1 a_0_0# a_128_0# 0.04345f
+C2 a_68_n36# a_0_0# 0.01514f
+C3 a_128_0# sub 0.10854f
+C4 a_0_0# sub 0.10854f
+.ends
+
+.subckt CMFB_Block VDD V_BIAS1 V_OP V_ON VCM VCMFBG VCMFBL VSS
+Xpmos$4_0 VDD VDD VSS VDD VDD pmos_cmfb_4
+Xpmos$4_1 VDD VDD VSS VDD VDD pmos_cmfb_4
+Xpmos$4_2 VDD VDD VSS VDD VDD pmos_cmfb_4
+Xnmos$1_0 VCMFBG VCMFBG VSS VCMFBG VSS VSS VCMFBG VCMFBG nmos_cmfb_1
+Xnmos$1_1 VCMFBL VCMFBL VSS VCMFBL VSS VSS VCMFBL VCMFBL nmos_cmfb_1
+Xnmos$1_2 VCMFBL VCMFBL VSS VSS VCMFBL VCMFBL VSS VCMFBL nmos_cmfb_1
+Xnmos$1_3 VCMFBG VCMFBG VSS VSS VCMFBG VCMFBG VSS VCMFBG nmos_cmfb_1
+Xpmos$3_0 VDD VDD VSS VDD VDD pmos_cmfb_3
+Xpmos$3_1 VDD VDD VSS VDD VDD pmos_cmfb_3
+Xpmos_0 V_ON V_ON VDD VSS m1_2156_n151# VCMFBG VCMFBG m1_2156_n151# V_ON pmos_cmfb
+Xpmos$1_0 VDD m1_2156_n151# VDD V_BIAS1 V_BIAS1 V_BIAS1 VDD V_BIAS1 V_BIAS1 m1_2156_n151#
++ V_BIAS1 VDD V_BIAS1 VDD VDD V_BIAS1 V_BIAS1 VSS V_BIAS1 VDD m1_2156_n151# m1_2156_n151#
++ V_BIAS1 VDD m1_2156_n151# V_BIAS1 V_BIAS1 m1_2156_n151# VDD VDD V_BIAS1 m1_2156_n151#
++ m1_2156_n151# V_BIAS1 V_BIAS1 pmos_cmfb_1
+Xpmos_1 VCM VCM VDD VSS m1_2156_n151# VCMFBL VCMFBL m1_2156_n151# VCM pmos_cmfb
+Xpmos$1_1 VDD m1_n207_n608# VDD V_BIAS1 V_BIAS1 V_BIAS1 VDD V_BIAS1 V_BIAS1 m1_n207_n608#
++ V_BIAS1 VDD V_BIAS1 VDD VDD V_BIAS1 V_BIAS1 VSS V_BIAS1 VDD m1_n207_n608# m1_n207_n608#
++ V_BIAS1 VDD m1_n207_n608# V_BIAS1 V_BIAS1 m1_n207_n608# VDD VDD V_BIAS1 m1_n207_n608#
++ m1_n207_n608# V_BIAS1 V_BIAS1 pmos_cmfb_1
+Xpmos_2 VCM VCM VDD VSS m1_2156_n151# VCMFBL VCMFBL m1_2156_n151# VCM pmos_cmfb
+Xpmos_3 V_ON V_ON VDD VSS VCMFBG m1_2156_n151# m1_2156_n151# VCMFBG V_ON pmos_cmfb
+Xpmos_4 V_OP V_OP VDD VSS m1_n207_n608# VCMFBG VCMFBG m1_n207_n608# V_OP pmos_cmfb
+Xnmos$2_0 VSS VSS VSS VSS nmos_cmfb_2
+Xpmos_5 VCM VCM VDD VSS m1_n207_n608# VCMFBL VCMFBL m1_n207_n608# VCM pmos_cmfb
+Xnmos$2_1 VSS VSS VSS VSS nmos_cmfb_2
+Xpmos_6 VCM VCM VDD VSS m1_n207_n608# VCMFBL VCMFBL m1_n207_n608# VCM pmos_cmfb
+Xpmos_7 V_OP V_OP VDD VSS VCMFBG m1_n207_n608# m1_n207_n608# VCMFBG V_OP pmos_cmfb
+C0 VDD V_BIAS1 4.0345f
+C1 m1_n207_n608# VCMFBG 0.11066f
+C2 m1_n207_n608# VDD 1.43626f
+C3 m1_2156_n151# V_BIAS1 0.28297f
+C4 V_BIAS1 VCM 0.0353f
+C5 V_OP V_BIAS1 0.10593f
+C6 V_ON V_BIAS1 0.10597f
+C7 m1_n207_n608# VCM 0.36701f
+C8 m1_n207_n608# V_OP 0.58521f
+C9 VCMFBG VCMFBL 1.66406f
+C10 VDD VCMFBL 0.66382f
+C11 m1_n207_n608# V_BIAS1 0.28296f
+C12 m1_2156_n151# VCMFBL 0.01087f
+C13 VDD VCMFBG 0.87424f
+C14 VCMFBL VCM 0.08051f
+C15 m1_2156_n151# VCMFBG 0.10975f
+C16 m1_2156_n151# VDD 1.43096f
+C17 VCMFBG VCM 0.23516f
+C18 VDD VCM 1.09069f
+C19 V_OP VCMFBG 0.07638f
+C20 VCMFBG V_ON 0.07723f
+C21 V_OP VDD 0.98272f
+C22 VDD V_ON 0.98263f
+C23 m1_2156_n151# VCM 0.367f
+C24 m1_2156_n151# V_ON 0.58525f
+C25 V_OP VCM 0.36964f
+C26 V_ON VCM 0.36987f
+C27 m1_n207_n608# VCMFBL 0.01211f
+C28 m1_n207_n608# VSS -0.28979f
+C29 V_OP VSS -0.12787f
+C30 VDD VSS -1.97265f
+C31 VCM VSS -0.30373f
+C32 m1_2156_n151# VSS -0.28716f
+C33 V_BIAS1 VSS -0.79491f
+C34 V_ON VSS -0.12719f
+C35 VCMFBG VSS 0.79158f
+C36 VCMFBL VSS 0.14907f
+.ends
+

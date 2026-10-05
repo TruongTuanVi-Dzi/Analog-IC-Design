@@ -1,0 +1,22 @@
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/BIAS_Block/BIAS_Block.sch
+**.subckt BIAS_Block VSS V_BIAS4 V_BIAS2 V_BIAS3 VDD V_BIAS1 V_BIAS
+*.iopin VSS
+*.opin V_BIAS4
+*.opin V_BIAS2
+*.opin V_BIAS3
+*.iopin VDD
+*.opin V_BIAS1
+*.ipin V_BIAS
+XM1 net1 net1 net2 VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM9 V_BIAS3 V_BIAS2 net4 VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM10 V_BIAS3 V_BIAS3 V_BIAS4 VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM11 V_BIAS4 V_BIAS4 VSS VSS sg13_lv_nmos w=3.3u l=0.3u ng=3
+XM8 net4 V_BIAS1 VDD VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM6 V_BIAS2 net1 net3 VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM2 net1 V_BIAS VDD VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM7 net3 net2 VSS VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM4 V_BIAS1 V_BIAS1 VDD VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM5 V_BIAS2 V_BIAS2 V_BIAS1 VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM3 net2 net2 VSS VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+**.ends
+.end

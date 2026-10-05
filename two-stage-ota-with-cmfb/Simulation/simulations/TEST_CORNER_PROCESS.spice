@@ -1,0 +1,174 @@
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/TEST_CORNER_PROCESS.sch
+**.subckt TEST_CORNER_PROCESS
+VDD VDD VSS 1.2
+VSS VSS 0 0.0
+V_IN V_IN VSS DC 0.6 AC -1.0
+V_IP V_IP VSS DC 0.6 AC 1.0
+V_BIAS V_BIAS VSS DC 0.7
+V_BIAS1 VCM VSS DC 0.4
+CL1 VOP VON 2p
+x1 VSS V_BIAS4 V_BIAS2 V_BIAS3 VDD V_BIAS1 V_BIAS BIAS_Block
+x2 VDD V_BIAS1 V_IN V_IP V_BIAS2 V_ON1 V_OP1 V_BIAS1 VON VOP VCMFBG V_BIAS4 VSS CASCODE_Block
+x3 VDD V_BIAS1 VCM VOP VON VCMFBL VCMFBG VSS CMFB_Block
+**** begin user architecture code
+
+
+.control
+set color0=white
+set color1=black
+
+set temps = ( -40 27 85 )
+
+foreach t $temps
+  set temp = $t
+
+  * 1. Phan tich AC
+  ac dec 20 1 10G
+
+  * Chuyen dung vao plot AC vua chay xong
+  set acplot = $curplot
+  setplot $acplot
+
+  * Tinh do loi vi sai (dB)
+  let a_diff = (v(vop) - v(von)) / (v(v_ip) - v(v_in))
+  let gain_db = db(a_diff)
+
+  * Doi pha tu Radian sang Do (Degree)
+  let phase_deg = cph(a_diff) * 180 / pi
+
+  meas ac dc_gain find gain_db at=1
+  meas ac gbw when gain_db=0 fall=1
+  meas ac phase_at_gbw find phase_deg when gain_db=0 fall=1
+  let pm = 180 + phase_at_gbw
+
+  * 2. Phan tich DC OP lay dong qua nguon VDD
+  op
+  set opplot = $curplot
+  setplot $opplot
+  let p_mw = abs(v(vdd) * vdd#branch) * 1e3
+
+  * In ket qua day du
+  echo '=================================================='
+  echo 'KET QUA TAI NHIET DO:' $t 'DO C'
+  echo '=================================================='
+  setplot $acplot
+  print dc_gain gbw pm
+  setplot $opplot
+  print p_mw
+end
+.endc
+
+
+
+
+**.lib cornerMOSlv.lib mos_tt
+
+
+
+
+**.lib cornerMOSlv.lib mos_ff
+
+
+
+
+**.lib cornerMOSlv.lib mos_ss
+
+
+
+
+**.lib cornerMOSlv.lib mos_fs
+
+
+
+
+.lib cornerMOSlv.lib mos_sf
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  BIAS_Block/BIAS_Block.sym # of pins=7
+** sym_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/BIAS_Block/BIAS_Block.sym
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/BIAS_Block/BIAS_Block.sch
+.subckt BIAS_Block VSS V_BIAS4 V_BIAS2 V_BIAS3 VDD V_BIAS1 V_BIAS
+*.iopin VSS
+*.opin V_BIAS4
+*.opin V_BIAS2
+*.opin V_BIAS3
+*.iopin VDD
+*.opin V_BIAS1
+*.ipin V_BIAS
+XM1 net1 net1 net2 VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM9 V_BIAS3 V_BIAS2 net4 VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM10 V_BIAS3 V_BIAS3 V_BIAS4 VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM11 V_BIAS4 V_BIAS4 VSS VSS sg13_lv_nmos w=3.3u l=0.3u ng=3
+XM8 net4 V_BIAS1 VDD VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM6 V_BIAS2 net1 net3 VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM2 net1 V_BIAS VDD VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM7 net3 net2 VSS VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM4 V_BIAS1 V_BIAS1 VDD VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM5 V_BIAS2 V_BIAS2 V_BIAS1 VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM3 net2 net2 VSS VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+.ends
+
+
+* expanding   symbol:  CASCODE_Block/CASCODE_Block.sym # of pins=13
+** sym_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/CASCODE_Block/CASCODE_Block.sym
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/CASCODE_Block/CASCODE_Block.sch
+.subckt CASCODE_Block VDD V_BIAS1 V_IN V_IP V_BIAS2 V_ON1 V_OP1 V_BIAS3 V_ON2 V_OP2 VCMFBG V_BIAS4 VSS
+*.iopin VDD
+*.ipin V_IN
+*.ipin V_IP
+*.iopin VSS
+*.ipin V_BIAS2
+*.ipin V_BIAS1
+*.ipin VCMFBG
+*.opin V_ON1
+*.opin V_OP1
+*.ipin V_BIAS3
+*.ipin V_BIAS4
+*.opin V_ON2
+*.opin V_OP2
+XM5 V_ON1 V_BIAS3 net4 VSS sg13_lv_nmos w=30u l=0.5u ng=10
+XM6 V_OP1 V_BIAS3 net5 VSS sg13_lv_nmos w=30u l=0.5u ng=10
+XM7 net4 VCMFBG VSS VSS sg13_lv_nmos w=30u l=0.6u ng=10
+XM8 net5 VCMFBG VSS VSS sg13_lv_nmos w=30u l=0.6u ng=10
+XM1 net2 V_IN net1 VDD sg13_lv_pmos w=120u l=0.45u ng=40 m=2
+XM2 net3 V_IP net1 VDD sg13_lv_pmos w=120u l=0.45u ng=40 m=2
+XM3 V_ON1 V_BIAS2 net2 VDD sg13_lv_pmos w=135u l=0.5u ng=45
+XM4 V_OP1 V_BIAS2 net3 VDD sg13_lv_pmos w=135u l=0.5u ng=45
+XM0 net1 V_BIAS1 VDD VDD sg13_lv_pmos w=120u l=0.45u ng=40
+XM_CS1 V_ON2 V_ON1 VDD VDD sg13_lv_pmos w=120u l=0.5u ng=40
+XM_CS2 V_OP2 V_OP1 VDD VDD sg13_lv_pmos w=120u l=0.5u ng=40
+XM_L1 V_ON2 V_BIAS4 VSS VSS sg13_lv_nmos w=80u l=0.5u ng=10
+XM_L2 V_OP2 V_BIAS4 VSS VSS sg13_lv_nmos w=80u l=0.5u ng=10
+R2 V_ON1 net6 0.9k
+C1 net6 V_ON2 3p
+R1 V_OP1 net7 0.9k
+C2 net7 V_OP2 3p
+.ends
+
+
+* expanding   symbol:  CMFB_Block/CMFB_Block.sym # of pins=8
+** sym_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/CMFB_Block/CMFB_Block.sym
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/CMFB_Block/CMFB_Block.sch
+.subckt CMFB_Block VDD V_BIAS1 VCM V_OP V_ON VCMFBL VCMFBG VSS
+*.ipin V_OP
+*.ipin V_ON
+*.ipin V_BIAS1
+*.iopin VCMFBL
+*.iopin VCMFBG
+*.iopin VSS
+*.iopin VDD
+*.iopin VCM
+XM14 net2 V_BIAS1 VDD VDD sg13_lv_pmos w=48.0u l=0.3u ng=16
+XM15 net1 V_BIAS1 VDD VDD sg13_lv_pmos w=48.0u l=0.3u ng=16
+XM16 VCMFBG V_OP net1 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+XM17 VCMFBL VCM net1 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+XM18 VCMFBL VCM net2 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+XM19 VCMFBG V_ON net2 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+XM20 VCMFBL VCMFBL VSS VSS sg13_lv_nmos w=7.2u l=0.3u ng=6
+XM21 VCMFBG VCMFBG VSS VSS sg13_lv_nmos w=7.2u l=0.3u ng=6
+.ends
+
+.end

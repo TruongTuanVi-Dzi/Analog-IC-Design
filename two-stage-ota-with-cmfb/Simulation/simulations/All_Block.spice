@@ -1,0 +1,229 @@
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/All_Block.sch
+**.subckt All_Block
+VDD VDD VSS 1.2
+VSS VSS 0 0.0
+V_IN V_IN VSS DC 0.6 AC -1.0
+V_IP V_IP VSS DC 0.6 AC 1.0
+V_BIAS V_BIAS VSS DC 0.7
+V_BIAS1 VCM VSS DC 0.4
+CL1 VOP VON 2p
+x1 VSS V_BIAS4 V_BIAS2 V_BIAS3 VDD V_BIAS1 V_BIAS BIAS_Block
+x2 VDD V_BIAS1 V_IN V_IP V_BIAS2 V_ON1 V_OP1 V_BIAS1 VON VOP VCMFBG V_BIAS4 VSS CASCODE_Block
+x3 VDD V_BIAS1 VCM VOP VON VCMFBL VCMFBG VSS CMFB_Block
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+
+
+.control
+unset echo
+set color0=white
+set color1=black
+
+* ============================================================
+* 1. DC, CONG SUAT & OUTPUT COMMON-MODE
+* ============================================================
+op
+let p_total = -v(VDD)*i(vdd)
+let vocm = 0.5 * (v(vop) + v(von))
+set r_vocm = $&vocm
+set r_ptotal = $&p_total
+
+* ============================================================
+* 2. AC VI SAI: GAIN, GBW, PHASE MARGIN
+* ============================================================
+alter @v_ip[acmag] = 0.5
+alter @v_in[acmag] = -0.5
+alter @vdd[acmag] = 0
+
+ac dec 50 1 10G
+let vod = v(vop) - v(von)
+let vid = v(v_ip) - v(v_in)
+let gain_db = db(vod/vid)
+let phase_deg = 180/PI * cph(vod/vid)
+
+meas ac adm_dc find gain_db at=1
+meas ac GBW when gain_db=0
+meas ac Phase_at_GBW find phase_deg at=GBW
+let Phase_Margin = 180 + Phase_at_GBW
+
+set r_gain = $&adm_dc
+set r_gbw_mhz = $&GBW
+set r_pm = $&Phase_Margin
+
+* ============================================================
+* 3. NOISE NGO VAO TAI 1 MHz (DA SUA TRIET DE LOI SCALAR)
+* ============================================================
+noise v(vop,von) v_ip dec 10 1Meg 1Meg
+let noise_val = noise1.inoise_spectrum
+set r_noise = $&noise_val
+
+* ============================================================
+* 4. CMRR TAI DC
+* ============================================================
+alter @v_ip[acmag] = 1.0
+alter @v_in[acmag] = 1.0
+alter @vdd[acmag] = 0
+
+ac dec 20 1 10Meg
+let vocm_ac = 0.5 * (v(vop) + v(von))
+let vicm_ac = v(v_ip)
+let acm_db = db(vocm_ac / vicm_ac)
+let cmrr_val = $r_gain - acm_db[0]
+set r_cmrr = $&cmrr_val
+
+* ============================================================
+* 5. PSRR TAI DC
+* ============================================================
+alter @v_ip[acmag] = 0
+alter @v_in[acmag] = 0
+alter @vdd[acmag] = 1.0
+
+ac dec 20 1 10Meg
+let vod_psrr = v(vop) - v(von)
+let asupply_db = db(vod_psrr)
+let psrr_val = $r_gain - asupply_db[0]
+set r_psrr = $&psrr_val
+
+* ============================================================
+* 6. TRANSIENT: SLEW RATE & OUTPUT SWING
+* ============================================================
+alter @vdd[acmag] = 0
+alter @v_ip[acmag] = 0
+alter @v_in[acmag] = 0
+
+alter @v_ip[pulse] = [ 0.2 1.0 10n 0.1n 0.1n 40n 100n ]
+alter @v_in[pulse] = [ 1.0 0.2 10n 0.1n 0.1n 40n 100n ]
+
+tran 0.1n 100n
+let v_diff = v(vop) - v(von)
+
+meas tran v_max max v_diff
+meas tran v_min min v_diff
+let v_diff_pp = v_max - v_min
+set r_swing = $&v_diff_pp
+
+meas tran t1 when v_diff=-0.2 cross=1
+meas tran t2 when v_diff=0.2 cross=1
+let sr_rise = (0.4) / (t2 - t1) / 1e6
+
+meas tran t3 when v_diff=0.2 cross=2
+meas tran t4 when v_diff=-0.2 cross=2
+let sr_fall = (0.4) / (t4 - t3) / 1e6
+let sr_avg = 0.5 * (sr_rise + sr_fall)
+set r_sr = $&sr_avg
+
+* ============================================================
+* BANG TONG HOP KET QUA HOAN CHINH (FINAL PROJECT)
+* ============================================================
+echo ''
+echo '=========================================================================='
+echo '                   TARGET SPECIFICATIONS FINAL PROJECT (PRE-LAYOUT)                   '
+echo '=========================================================================='
+echo '1. DC Gain (dB)          [Target >= 75 dB]      : ' $r_gain 'dB'
+echo '2. GBW (Hz)              [Target >= 200 MHz]    : ' $r_gbw_mhz 'Hz'
+echo '3. Phase Margin (deg)    [Target >= 60 deg]     : ' $r_pm 'deg'
+echo '4. Power (W)             [Target < 3.0 mW]      : ' $r_ptotal 'W'
+echo '5. Output CM (V)         [Target = 0.60 V]      : ' $r_vocm 'V'
+echo '6. Noise @ 1MHz (V/rtHz) [Target < 15 nV/rtHz]  : ' $r_noise 'V/rtHz'
+echo '7. CMRR @ DC (dB)        [Target > 80 dB]       : ' $r_cmrr 'dB'
+echo '8. PSRR @ DC (dB)        [Target > 70 dB]       : ' $r_psrr 'dB'
+echo '9. Slew Rate (V/us)      [Target > 100 V/us]    : ' $r_sr 'V/us'
+echo '10. Output Swing (Vpp)   [Target > 1.0 Vpp]     : ' $r_swing 'Vpp'
+echo '=========================================================================='
+echo ''
+
+.endc
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  BIAS_Block/BIAS_Block.sym # of pins=7
+** sym_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/BIAS_Block/BIAS_Block.sym
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/BIAS_Block/BIAS_Block.sch
+.subckt BIAS_Block VSS V_BIAS4 V_BIAS2 V_BIAS3 VDD V_BIAS1 V_BIAS
+*.iopin VSS
+*.opin V_BIAS4
+*.opin V_BIAS2
+*.opin V_BIAS3
+*.iopin VDD
+*.opin V_BIAS1
+*.ipin V_BIAS
+XM1 net1 net1 net2 VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM9 V_BIAS3 V_BIAS2 net4 VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM10 V_BIAS3 V_BIAS3 V_BIAS4 VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM11 V_BIAS4 V_BIAS4 VSS VSS sg13_lv_nmos w=3.3u l=0.3u ng=3
+XM8 net4 V_BIAS1 VDD VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM6 V_BIAS2 net1 net3 VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM2 net1 V_BIAS VDD VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM7 net3 net2 VSS VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+XM4 V_BIAS1 V_BIAS1 VDD VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM5 V_BIAS2 V_BIAS2 V_BIAS1 VDD sg13_lv_pmos w=13.2u l=0.3u ng=4
+XM3 net2 net2 VSS VSS sg13_lv_nmos w=4.4u l=0.3u ng=4
+.ends
+
+
+* expanding   symbol:  CASCODE_Block/CASCODE_Block.sym # of pins=13
+** sym_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/CASCODE_Block/CASCODE_Block.sym
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/CASCODE_Block/CASCODE_Block.sch
+.subckt CASCODE_Block VDD V_BIAS1 V_IN V_IP V_BIAS2 V_ON1 V_OP1 V_BIAS3 V_ON2 V_OP2 VCMFBG V_BIAS4 VSS
+*.iopin VDD
+*.ipin V_IN
+*.ipin V_IP
+*.iopin VSS
+*.ipin V_BIAS2
+*.ipin V_BIAS1
+*.ipin VCMFBG
+*.opin V_ON1
+*.opin V_OP1
+*.ipin V_BIAS3
+*.ipin V_BIAS4
+*.opin V_ON2
+*.opin V_OP2
+XM5 V_ON1 V_BIAS3 net4 VSS sg13_lv_nmos w=30u l=0.5u ng=10
+XM6 V_OP1 V_BIAS3 net5 VSS sg13_lv_nmos w=30u l=0.5u ng=10
+XM7 net4 VCMFBG VSS VSS sg13_lv_nmos w=30u l=0.6u ng=10
+XM8 net5 VCMFBG VSS VSS sg13_lv_nmos w=30u l=0.6u ng=10
+XM1 net2 V_IN net1 VDD sg13_lv_pmos w=120u l=0.45u ng=40 m=2
+XM2 net3 V_IP net1 VDD sg13_lv_pmos w=120u l=0.45u ng=40 m=2
+XM3 V_ON1 V_BIAS2 net2 VDD sg13_lv_pmos w=135u l=0.5u ng=45
+XM4 V_OP1 V_BIAS2 net3 VDD sg13_lv_pmos w=135u l=0.5u ng=45
+XM0 net1 V_BIAS1 VDD VDD sg13_lv_pmos w=120u l=0.45u ng=40
+XM_CS1 V_ON2 V_ON1 VDD VDD sg13_lv_pmos w=120u l=0.5u ng=40
+XM_CS2 V_OP2 V_OP1 VDD VDD sg13_lv_pmos w=120u l=0.5u ng=40
+XM_L1 V_ON2 V_BIAS4 VSS VSS sg13_lv_nmos w=80u l=0.5u ng=10
+XM_L2 V_OP2 V_BIAS4 VSS VSS sg13_lv_nmos w=80u l=0.5u ng=10
+R2 V_ON1 net6 0.9k
+C1 net6 V_ON2 3p
+R1 V_OP1 net7 0.9k
+C2 net7 V_OP2 3p
+.ends
+
+
+* expanding   symbol:  CMFB_Block/CMFB_Block.sym # of pins=8
+** sym_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/CMFB_Block/CMFB_Block.sym
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/DO_AN_BAO_CAO/All_Block/CMFB_Block/CMFB_Block.sch
+.subckt CMFB_Block VDD V_BIAS1 VCM V_OP V_ON VCMFBL VCMFBG VSS
+*.ipin V_OP
+*.ipin V_ON
+*.ipin V_BIAS1
+*.iopin VCMFBL
+*.iopin VCMFBG
+*.iopin VSS
+*.iopin VDD
+*.iopin VCM
+XM14 net2 V_BIAS1 VDD VDD sg13_lv_pmos w=48.0u l=0.3u ng=16
+XM15 net1 V_BIAS1 VDD VDD sg13_lv_pmos w=48.0u l=0.3u ng=16
+XM16 VCMFBG V_OP net1 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+XM17 VCMFBL VCM net1 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+XM18 VCMFBL VCM net2 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+XM19 VCMFBG V_ON net2 VDD sg13_lv_pmos w=7.2u l=0.3u ng=6
+XM20 VCMFBL VCMFBL VSS VSS sg13_lv_nmos w=7.2u l=0.3u ng=6
+XM21 VCMFBG VCMFBG VSS VSS sg13_lv_nmos w=7.2u l=0.3u ng=6
+.ends
+
+.end
