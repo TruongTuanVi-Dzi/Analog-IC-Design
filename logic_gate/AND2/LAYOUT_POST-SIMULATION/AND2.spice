@@ -1,0 +1,39 @@
+* NGSPICE file created from AND2.ext - technology: ihp-sg13g2
+
+.subckt nmos a_100_15# a_74_n21# sub a_0_0#
+X0 a_100_15# a_74_n21# a_0_0# sub sg13_lv_nmos ad=0.1005p pd=1.34u as=0.1005p ps=1.34u w=0.15u l=0.13u
+C0 a_100_15# a_0_0# 0.01201f
+C1 a_100_15# sub 0.04751f
+C2 a_0_0# sub 0.04751f
+.ends
+
+.subckt pmos a_100_15# w_n62_n62# a_74_n21# sub a_0_0#
+X0 a_100_15# a_74_n21# a_0_0# w_n62_n62# sg13_lv_pmos ad=0.1005p pd=1.34u as=0.1005p ps=1.34u w=0.15u l=0.13u
+C0 a_74_n21# w_n62_n62# 0.02613f
+C1 a_100_15# a_0_0# 0.01201f
+C2 a_100_15# sub 0.03108f
+C3 a_0_0# sub 0.03108f
+.ends
+
+.subckt AND2 A B Y VDD VSS
+Xnmos_0 Y a_628_n127# VSS VSS nmos
+Xnmos_1 VSS B VSS m1_217_n311# nmos
+Xnmos_2 m1_217_n311# A VSS a_628_n127# nmos
+Xpmos_0 Y VDD a_628_n127# VSS VDD pmos
+Xpmos_1 a_628_n127# VDD B VSS VDD pmos
+Xpmos_2 VDD VDD A VSS a_628_n127# pmos
+C0 VDD a_628_n127# 0.2034f
+C1 A B 0.03272f
+C2 Y VDD 0.0242f
+C3 A VDD 0.03575f
+C4 Y a_628_n127# 0.0316f
+C5 VDD B 0.03915f
+C6 A a_628_n127# 0.03311f
+C7 a_628_n127# B 0.03155f
+C8 VDD VSS 0.17478f
+C9 A VSS 0.02227f
+C10 B VSS 0.06888f
+C11 Y VSS 0.06958f
+C12 a_628_n127# VSS 0.21518f
+.ends
+

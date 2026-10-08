@@ -1,0 +1,27 @@
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/Bai_Tap_Buoi_2/AND_GATE/Layout/AND2_tb.sch
+**.subckt AND2_tb
+VDD Vdd Vss 1.7
+VSS Vss 0 0
+VA Va Vss PULSE(0 1.7 0 70p 70p 10n 20n)
+VB Vb Vss PULSE(0 1.7 0 70p 70p 5n 10n)
+x1 Va Vb Vout Vdd Vss AND2
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+
+
+.tran 10p 100n
+.save all
+
+
+
+
+.inc /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/Bai_Tap_Buoi_2/AND_GATE/Layout/AND2.spice
+
+
+**** end user architecture code
+**.ends
+.end
