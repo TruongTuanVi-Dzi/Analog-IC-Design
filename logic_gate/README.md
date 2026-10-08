@@ -18,6 +18,14 @@ The `AND2` standard cell is implemented by cascading a static CMOS NAND2 gate fo
 
 ---
 
+#### Physical Verification (DRC & LVS)
+* **DRC (Design Rule Check):** 0 errors / 100% clean verification on IHP SG13G2 rules.
+* **LVS (Layout Versus Schematic):** Netlists matched completely.
+
+| DRC Clean Verification | LVS Clean Verification |
+| :---: | :---: |
+| <img src="image/and2_drc_clean.png" width="450" alt="AND2 DRC Clean"/> | <img src="image/and2_lvs_clean.png" width="450" alt="AND2 LVS Clean"/> |
+
 ### 1.2. Pre-Layout vs. Post-Layout Testbench Setup
 
 * **Operating Conditions:** $V_{DD} = 1.7\text{ V}$, $T = 27^\circ\text{C}$, Typical Corner (`cornerMOSlv.lib mos_tt`).
