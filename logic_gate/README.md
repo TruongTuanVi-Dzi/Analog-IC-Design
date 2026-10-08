@@ -11,7 +11,7 @@ The `AND2` standard cell is implemented by cascading a static CMOS NAND2 gate fo
 
 | Transistor-Level Schematic | Full-Custom Layout (`AND2.gds`) |
 | :---: | :---: |
-| <img src="logic_gate/image/and2_schematic.png" width="450" alt="AND2 Schematic"/> | <img src="logic_gate/image/and2_layout.png" width="450" alt="AND2 Layout"/> |
+| <img src="image/and2_schematic.png" width="450" alt="AND2 Schematic"/> | <img src="image/and2_layout.png" width="450" alt="AND2 Layout"/> |
 
 * **Cell Dimensions:** `[Width W] 4.060172 µm` × `[Height H] 3.7130014 µm`
 * **Silicon Area:** `[W x H] 15.07542432 µm² = (15.07542432e-12)m²`
@@ -27,7 +27,7 @@ The `AND2` standard cell is implemented by cascading a static CMOS NAND2 gate fo
 
 | Pre-Layout Testbench (`TEST_PRE.sch`) | Post-Layout Testbench (`TEST_POST.sch`) |
 | :---: | :---: |
-| <img src="logic_gate/image/and2_tb_pre.png" width="450" alt="Pre-Layout Testbench"/> | <img src="logic_gate/image/and2_tb_post.png" width="450" alt="Post-Layout Testbench"/> |
+| <img src="image/and2_tb_pre.png" width="450" alt="Pre-Layout Testbench"/> | <img src="image/and2_tb_post.png" width="450" alt="Post-Layout Testbench"/> |
 
 ---
 
@@ -35,7 +35,7 @@ The `AND2` standard cell is implemented by cascading a static CMOS NAND2 gate fo
 
 | Pre-Layout Transient Waveform | Post-Layout (PEX) Transient Waveform |
 | :---: | :---: |
-| <img src="logic_gate/image/and2_sim_pre.png" width="450" alt="Pre-Layout Waveform"/> | <img src="logic_gate/image/and2_sim_post.png" width="450" alt="Post-Layout Waveform"/> |
+| <img src="image/and2_sim_pre.png" width="450" alt="Pre-Layout Waveform"/> | <img src="image/and2_sim_post.png" width="450" alt="Post-Layout Waveform"/> |
 
 ---
 
@@ -49,7 +49,7 @@ Propagation delay when output change from low - high ($0 \to 1$):
 
 | Pre-Layout $t_{pLH}$ Waveform | Post-Layout (PEX) $t_{pLH}$ Waveform |
 | :---: | :---: |
-| <img src="logic_gate/image/and2_tplh_pre.png" width="450" alt="AND2 Pre-Layout tpLH"/> | <img src="logic_gate/image/and2_tplh_post.png" width="450" alt="AND2 Post-Layout tpLH"/> |
+| <img src="image/and2_tplh_pre.png" width="450" alt="AND2 Pre-Layout tpLH"/> | <img src="image/and2_tplh_post.png" width="450" alt="AND2 Post-Layout tpLH"/> |
 
 * **Pre-Layout $t_{pLH}$:** `30 ps`
 * **Post-Layout $t_{pLH}$:** `40 ps`
@@ -62,7 +62,7 @@ Propagation delay when output change from high - low ($1 \to 0$):
 
 | Pre-Layout $t_{pHL}$ Waveform | Post-Layout (PEX) $t_{pHL}$ Waveform |
 | :---: | :---: |
-| <img src="logic_gate/image/and2_tphl_pre.png" width="450" alt="AND2 Pre-Layout tpHL"/> | <img src="logic_gate/image/and2_tphl_post.png" width="450" alt="AND2 Post-Layout tpHL"/> |
+| <img src="image/and2_tphl_pre.png" width="450" alt="AND2 Pre-Layout tpHL"/> | <img src="image/and2_tphl_post.png" width="450" alt="AND2 Post-Layout tpHL"/> |
 
 * **Pre-Layout $t_{pHL}$:** `40 ps`
 * **Post-Layout $t_{pHL}$:** `40 ps`
