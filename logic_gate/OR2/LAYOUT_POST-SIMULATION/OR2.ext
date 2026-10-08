@@ -1,0 +1,80 @@
+timestamp 1620037868
+version 8.3
+tech ihp-sg13g2
+style ngspice()
+scale 1000 1 0.5
+resistclasses 3000000 67000 110 88 88 88 88 18 11 7000 260000 1360000
+use nmos nmos_0 1 0 277 0 1 -199
+use nmos nmos_1 1 0 -76 0 1 -199
+use nmos nmos_2 1 0 -190 0 1 -199
+use pmos pmos_0 1 0 277 0 1 42
+use pmos pmos_1 1 0 -76 0 1 42
+use pmos pmos_2 1 0 -190 0 1 42
+port "Y" 4 405 -185 437 88 m1
+port "B" 3 13 -76 45 -44 m1
+port "A" 2 -101 -76 -69 -44 m1
+port "VDD" 5 -253 203 514 243 m2
+port "VSS" 6 -246 -318 521 -278 m2
+node "Y" 1 92.7156 405 -185 m1 0 0 0 0 8736 610 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+node "a_309_n88#" 5 458.053 309 -88 p 0 0 0 0 6400 640 26399 1640 24760 1318 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+node "B" 0 62.6802 13 -76 m1 0 0 0 0 1024 128 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+node "A" 0 77.7039 -101 -76 m1 0 0 0 0 1024 128 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+node "VDD" 5 250.635 -253 203 m2 0 0 0 0 17408 1388 30680 1614 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+substrate "VSS" 4 0 -246 -318 m2 0 0 0 0 16000 1300 30680 1614 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+cap "Y" "VDD" 34.0382
+cap "Y" "a_309_n88#" 27.3449
+cap "a_309_n88#" "VDD" 171.729
+cap "B" "A" 20.4562
+cap "Y" "B" 0.412956
+cap "B" "VDD" 31.7218
+cap "a_309_n88#" "B" 18.3502
+cap "Y" "A" 0.25626
+cap "A" "VDD" 28.2922
+cap "a_309_n88#" "A" 9.47278
+cap "pmos_2/a_74_n21#" "pmos_2/a_100_15#" 0.979011
+cap "pmos_2/a_74_n21#" "pmos_2/a_0_0#" -3.92646
+cap "pmos_1/a_100_15#" "pmos_0/a_100_15#" 3.34067
+cap "pmos_2/a_100_15#" "pmos_1/a_100_15#" 6.28941
+cap "pmos_2/a_74_n21#" "pmos_1/a_74_n21#" 9.69856
+cap "pmos_2/a_100_15#" "pmos_0/a_100_15#" 0.0253086
+cap "pmos_2/a_0_0#" "pmos_0/a_100_15#" -11.0013
+cap "pmos_2/a_0_0#" "pmos_1/a_100_15#" -5.77841
+cap "pmos_2/a_100_15#" "pmos_2/a_0_0#" -0.719019
+cap "pmos_0/a_100_15#" "pmos_1/a_74_n21#" 0.136522
+cap "pmos_1/a_100_15#" "pmos_1/a_74_n21#" 7.80183
+cap "pmos_2/a_100_15#" "pmos_1/a_74_n21#" -4.44089e-16
+cap "pmos_2/a_0_0#" "pmos_1/a_74_n21#" 0.573288
+cap "pmos_2/a_74_n21#" "nmos_2/a_100_15#" 2.48732
+cap "nmos_2/a_100_15#" "pmos_0/a_100_15#" -3.40035
+cap "nmos_2/a_100_15#" "pmos_1/a_100_15#" -0.261608
+cap "pmos_2/a_100_15#" "nmos_2/a_100_15#" 2.74329
+cap "pmos_2/a_0_0#" "nmos_2/a_100_15#" -1.53867
+cap "nmos_2/a_100_15#" "pmos_1/a_74_n21#" 2.16672
+cap "pmos_2/a_74_n21#" "pmos_0/a_100_15#" 0.085305
+cap "pmos_2/a_74_n21#" "pmos_1/a_100_15#" 4.01387
+merge "pmos_2/a_100_15#" "pmos_1/a_0_0#" -33.4395 0 0 0 0 -1664 -168 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+merge "pmos_2/sub!" "pmos_1/sub!" -87.3521 0 0 0 0 -4352 -464 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+merge "pmos_1/sub!" "pmos_0/sub!"
+merge "pmos_0/sub!" "nmos_2/sub!"
+merge "nmos_2/sub!" "nmos_2/a_100_15#"
+merge "nmos_2/a_100_15#" "nmos_1/sub!"
+merge "nmos_1/sub!" "nmos_1/a_0_0#"
+merge "nmos_1/a_0_0#" "nmos_0/sub!"
+merge "nmos_0/sub!" "nmos_0/a_0_0#"
+merge "nmos_0/a_0_0#" "VSS"
+merge "pmos_0/a_100_15#" "nmos_0/a_100_15#" -43.7526 0 0 0 0 -2688 -296 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+merge "nmos_0/a_100_15#" "Y"
+merge "pmos_1/a_74_n21#" "nmos_1/a_74_n21#" -48.4823 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+merge "nmos_1/a_74_n21#" "B"
+merge "pmos_2/a_0_0#" "pmos_2/w_n62_n62#" -51.9118 0 0 0 0 -2688 -296 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+merge "pmos_2/w_n62_n62#" "pmos_1/w_n62_n62#"
+merge "pmos_1/w_n62_n62#" "pmos_0/a_0_0#"
+merge "pmos_0/a_0_0#" "pmos_0/w_n62_n62#"
+merge "pmos_0/w_n62_n62#" "VDD"
+merge "pmos_1/a_100_15#" "pmos_0/a_74_n21#" -113.838 0 0 0 0 -3840 -432 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+merge "pmos_0/a_74_n21#" "nmos_2/a_0_0#"
+merge "nmos_2/a_0_0#" "nmos_1/a_100_15#"
+merge "nmos_1/a_100_15#" "nmos_0/a_74_n21#"
+merge "nmos_0/a_74_n21#" "a_309_n88#"
+merge "pmos_2/a_74_n21#" "nmos_2/a_74_n21#" -38.5959 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+merge "nmos_2/a_74_n21#" "A"

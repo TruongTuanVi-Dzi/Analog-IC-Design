@@ -1,0 +1,40 @@
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/Bai_Tap_Buoi_2/OR_GATE/OR_test.sch
+**.subckt OR_test
+VDD Vdd Vss 2.1
+VSS Vss 0 0
+VA Va Vss PULSE(0 2.1 0 50p 50p 10n 20n)
+VB Vb Vss PULSE(0 2.1 0 50p 50p 20n 40n)
+x1 Vdd Va Vb Vout Vss OR
+**** begin user architecture code
+
+
+.tran 10p 100n
+.save all
+
+
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/Bai_Tap_Buoi_2/OR_GATE/OR.sym # of pins=5
+** sym_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/Bai_Tap_Buoi_2/OR_GATE/OR.sym
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/Bai_Tap_Buoi_2/OR_GATE/OR.sch
+.subckt OR VDD A B Y VSS
+*.ipin A
+*.ipin B
+*.opin Y
+*.iopin VDD
+*.iopin VSS
+XM1 net2 A VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+XM2 net1 A VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+XM3 net2 B net1 VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+XM4 net2 B VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+XM5 Y net2 VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+XM6 Y net2 VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+.ends
+
+.end

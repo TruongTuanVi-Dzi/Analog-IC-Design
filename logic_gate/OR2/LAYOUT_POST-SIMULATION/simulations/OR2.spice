@@ -1,0 +1,10 @@
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/Bai_Tap_Buoi_2/OR_GATE/Layout/OR2.sch
+.subckt OR2 A B Y VDD VSS
+*.PININFO A:I B:I Y:O VDD:B VSS:B
+MM1 net2 A VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+MM2 net1 A VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+MM3 net2 B net1 VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+MM4 net2 B VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+MM5 Y net2 VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+MM6 Y net2 VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+.ends

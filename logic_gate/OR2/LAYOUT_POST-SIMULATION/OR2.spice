@@ -1,0 +1,40 @@
+* NGSPICE file created from OR2.ext - technology: ihp-sg13g2
+
+.subckt nmos a_100_15# a_74_n21# sub a_0_0#
+X0 a_100_15# a_74_n21# a_0_0# sub sg13_lv_nmos ad=0.1005p pd=1.34u as=0.1005p ps=1.34u w=0.15u l=0.13u
+C0 a_0_0# a_100_15# 0.01201f
+C1 a_100_15# sub 0.04751f
+C2 a_0_0# sub 0.04751f
+.ends
+
+.subckt pmos a_100_15# w_n62_n62# a_74_n21# sub a_0_0#
+X0 a_100_15# a_74_n21# a_0_0# w_n62_n62# sg13_lv_pmos ad=0.1005p pd=1.34u as=0.1005p ps=1.34u w=0.15u l=0.13u
+C0 w_n62_n62# a_74_n21# 0.02613f
+C1 a_0_0# a_100_15# 0.01201f
+C2 a_100_15# sub 0.03108f
+C3 a_0_0# sub 0.03108f
+.ends
+
+.subckt OR2 A B Y VDD VSS
+Xnmos_0 Y a_309_n88# VSS VSS nmos
+Xnmos_1 a_309_n88# B VSS VSS nmos
+Xnmos_2 VSS A VSS a_309_n88# nmos
+Xpmos_0 Y VDD a_309_n88# VSS VDD pmos
+Xpmos_1 a_309_n88# VDD B VSS pmos_1/a_0_0# pmos
+Xpmos_2 pmos_1/a_0_0# VDD A VSS VDD pmos
+C0 a_309_n88# B 0.02615f
+C1 B A 0.03015f
+C2 a_309_n88# VDD 0.16595f
+C3 VDD A 0.02437f
+C4 a_309_n88# Y 0.03069f
+C5 B VDD 0.0323f
+C6 a_309_n88# A 0.01349f
+C7 VDD Y 0.02304f
+C8 pmos_1/a_0_0# VSS -0.0307f
+C9 VDD VSS 0.19718f
+C10 A VSS 0.0416f
+C11 B VSS 0.01636f
+C12 Y VSS 0.04556f
+C13 a_309_n88# VSS 0.34395f
+.ends
+
