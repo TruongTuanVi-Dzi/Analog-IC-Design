@@ -1,0 +1,8 @@
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/Bai_Tap_Buoi_2/NAND_GATE/Layout/NAND2.sch
+.subckt NAND2 B A Y VDD VSS
+*.PININFO VDD:B VSS:B A:I Y:O B:I
+MM1 Y A net1 VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+MM2 Y A VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+MM4 Y B VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+MM5 net1 B VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+.ends

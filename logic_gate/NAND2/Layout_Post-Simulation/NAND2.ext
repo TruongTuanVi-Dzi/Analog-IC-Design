@@ -1,0 +1,57 @@
+timestamp 1620076189
+version 8.3
+tech ihp-sg13g2
+style ngspice()
+scale 1000 1 0.5
+resistclasses 3000000 67000 110 88 88 88 88 18 11 7000 260000 1360000
+use pmos pmos_0 1 0 -59 0 1 225
+use pmos pmos_1 1 0 -173 0 1 225
+use nmos nmos_0 1 0 -59 0 1 2
+use nmos nmos_1 1 0 -173 0 1 2
+port "Y" 4 69 16 101 271 m1
+port "A" 3 -9 94 23 126 m1
+port "B" 2 -122 158 -90 190 m1
+port "VDD" 6 -234 364 178 404 m2
+port "VSS" 7 -217 -104 195 -64 m2
+node "Y" 2 140.977 69 16 m1 0 0 0 0 10208 758 10800 620 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+node "A" 0 76.136 -9 94 m1 0 0 0 0 1024 128 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+node "B" 0 69.1338 -122 158 m1 0 0 0 0 1024 128 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+node "VDD" 3 185.664 -234 364 m2 0 0 0 0 12000 1050 16480 904 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+substrate "VSS" 3 0 -217 -104 m2 0 0 0 0 9984 864 16480 904 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+cap "A" "VDD" 32.3966
+cap "Y" "A" 22.6818
+cap "B" "VDD" 39.5269
+cap "Y" "B" 9.44347
+cap "Y" "VDD" 139.283
+cap "A" "B" 14.9817
+cap "nmos_1/a_74_n21#" "nmos_0/a_74_n21#" 9.00082
+cap "nmos_1/a_74_n21#" "nmos_1/a_0_0#" 2.56532
+cap "nmos_1/a_0_0#" "nmos_0/a_74_n21#" 0.937519
+cap "nmos_0/a_100_15#" "nmos_1/a_100_15#" 1.38471
+cap "pmos_1/a_100_15#" "nmos_1/a_100_15#" 3.88666
+cap "nmos_0/a_100_15#" "pmos_1/a_100_15#" -27.5354
+cap "nmos_1/a_100_15#" "nmos_0/a_74_n21#" 1.99698
+cap "nmos_1/a_74_n21#" "nmos_0/a_100_15#" 2.89681
+cap "nmos_1/a_0_0#" "nmos_1/a_100_15#" 9.99729
+cap "nmos_0/a_100_15#" "nmos_0/a_74_n21#" 3.1586
+cap "nmos_1/a_74_n21#" "pmos_1/a_100_15#" -5.13709
+cap "nmos_0/a_100_15#" "nmos_1/a_0_0#" 2.06943
+cap "pmos_1/a_100_15#" "nmos_0/a_74_n21#" -5.71904
+cap "pmos_1/a_100_15#" "nmos_1/a_0_0#" -2.18474
+merge "nmos_0/a_100_15#" "pmos_1/a_0_0#" -67.3402 0 0 0 0 -4096 -448 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+merge "pmos_1/a_0_0#" "pmos_0/a_100_15#"
+merge "pmos_0/a_100_15#" "Y"
+merge "nmos_1/a_74_n21#" "pmos_1/a_74_n21#" -43.0531 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+merge "pmos_1/a_74_n21#" "B"
+merge "nmos_1/sub!" "nmos_1/a_0_0#" -32.132 0 0 0 0 -1344 -148 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+merge "nmos_1/a_0_0#" "nmos_0/sub!"
+merge "nmos_0/sub!" "pmos_1/sub!"
+merge "pmos_1/sub!" "pmos_0/sub!"
+merge "pmos_0/sub!" "VSS"
+merge "pmos_1/a_100_15#" "pmos_1/w_n62_n62#" -47.749 0 0 0 0 -3008 -316 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+merge "pmos_1/w_n62_n62#" "pmos_0/a_0_0#"
+merge "pmos_0/a_0_0#" "pmos_0/w_n62_n62#"
+merge "pmos_0/w_n62_n62#" "VDD"
+merge "nmos_0/a_74_n21#" "pmos_0/a_74_n21#" -41.9256 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+merge "pmos_0/a_74_n21#" "A"
+merge "nmos_1/a_100_15#" "nmos_0/a_0_0#" -42.7087 0 0 0 0 -1664 -168 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0

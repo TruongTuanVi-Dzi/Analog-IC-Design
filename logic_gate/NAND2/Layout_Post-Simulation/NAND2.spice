@@ -1,0 +1,35 @@
+* NGSPICE file created from NAND2.ext - technology: ihp-sg13g2
+
+.subckt nmos a_100_15# a_74_n21# sub a_0_0#
+X0 a_100_15# a_74_n21# a_0_0# sub sg13_lv_nmos ad=0.1005p pd=1.34u as=0.1005p ps=1.34u w=0.15u l=0.13u
+C0 a_100_15# a_0_0# 0.01201f
+C1 a_100_15# sub 0.04751f
+C2 a_0_0# sub 0.04751f
+.ends
+
+.subckt pmos a_100_15# w_n62_n62# a_74_n21# sub a_0_0#
+X0 a_100_15# a_74_n21# a_0_0# w_n62_n62# sg13_lv_pmos ad=0.1005p pd=1.34u as=0.1005p ps=1.34u w=0.15u l=0.13u
+C0 a_74_n21# w_n62_n62# 0.02613f
+C1 a_100_15# a_0_0# 0.01201f
+C2 a_100_15# sub 0.03108f
+C3 a_0_0# sub 0.03108f
+.ends
+
+.subckt NAND2 B A Y VDD VSS
+Xnmos_0 Y A VSS nmos_0/a_0_0# nmos
+Xnmos_1 nmos_0/a_0_0# B VSS VSS nmos
+Xpmos_0 Y VDD A VSS VDD pmos
+Xpmos_1 VDD VDD B VSS Y pmos
+C0 Y A 0.02584f
+C1 VDD Y 0.11175f
+C2 B A 0.02398f
+C3 VDD B 0.03439f
+C4 Y B 0.01234f
+C5 VDD A 0.02668f
+C6 B VSS 0.02865f
+C7 Y VSS 0.07571f
+C8 A VSS 0.03515f
+C9 VDD VSS 0.13573f
+C10 nmos_0/a_0_0# VSS -0.03271f
+.ends
+
