@@ -383,3 +383,92 @@ Measured when the output transitions from high to low ($1 \to 0$):
 
 ---
 
+
+## 5. 2-Input XOR Gate (`XOR2`)
+
+The `XOR2` standard cell is implemented using a 12-transistor complementary static CMOS architecture on the IHP SG13G2 (130nm BiCMOS) node. The topology incorporates internal transmission-like and complementary inverter stages to generate inverted inputs ($\bar{A}, \bar{B}$) and realize the exclusive-OR Boolean function ($Y = A \bar{B} + \bar{A} B$).
+
+---
+
+### 5.1. Schematic & Physical Layout
+
+* **Transistor Sizing:** PMOS ($W = 0.15\,\mu\text{m}, L = 0.13\,\mu\text{m}$), NMOS ($W = 0.15\,\mu\text{m}, L = 0.13\,\mu\text{m}$).
+* **Physical Layout:** Full-custom layout with strict design-rule separation between gate contacts (`Cont->Gatpoly`) and active diffusion contacts (`Cont->Activ`), independent continuous supply rails ($V_{DD}, V_{SS}$), and integrated tap cells to eliminate latch-up risks.
+
+| Transistor-Level Schematic | Full-Custom Layout (`XOR2.gds`) |
+| :---: | :---: |
+| <img src="image/xor2_schematic.png" width="450" alt="XOR2 Schematic"/> | <img src="image/xor2_layout.png" width="450" alt="XOR2 Layout"/> |
+
+* **Cell Dimensions:** `[Width W] 6.095µm` × `[Height H] 7.5578539µm`
+* **Silicon Area:** `[W x H] 46.06511952µm²`
+
+#### Physical Verification (DRC & LVS)
+* **DRC (Design Rule Check):** 0 errors / 100% clean verification on IHP SG13G2 rules.
+* **LVS (Layout Versus Schematic):** Complete matching across all 12 transistors (6 PMOS, 6 NMOS) with zero net shorts or topology mismatches.
+
+| DRC Clean Verification | LVS Clean Verification |
+| :---: | :---: |
+| <img src="image/xor2_drc_clean.png" width="450" alt="XOR2 DRC Clean"/> | <img src="image/xor2_lvs_clean.png" width="450" alt="XOR2 LVS Clean"/> |
+
+---
+
+### 5.2. Pre-Layout vs. Post-Layout Testbench Setup
+
+* **Operating Conditions:** $V_{DD} = 1.77\text{ V}$, $T = 27^\circ\text{C}$, Typical Corner (`cornerMOSlv.lib mos_tt`).
+* **Input Stimuli:** 
+  * $V_A$: Pulse ($0\text{ V} \to 1.77\text{ V}$, Period $= 100\text{ ns}$, Pulse Width $= 50\text{ ns}$, $t_r = t_f = 50\text{ ps}$).
+  * $V_B$: Pulse ($0\text{ V} \to 1.77\text{ V}$, Period $= 50\text{ ns}$, Pulse Width $= 25\text{ ns}$, $t_r = t_f = 50\text{ ps}$).
+
+| Pre-Layout Testbench (`TEST_PRE.sch`) | Post-Layout Testbench (`TEST_POST.sch`) |
+| :---: | :---: |
+| <img src="image/xor2_tb_pre.png" width="450" alt="XOR2 Pre-Layout Testbench"/> | <img src="image/xor2_tb_post.png" width="450" alt="XOR2 Post-Layout Testbench"/> |
+
+---
+
+### 5.3. Transient Simulation Results
+
+| Pre-Layout Transient Waveform | Post-Layout (PEX) Transient Waveform |
+| :---: | :---: |
+| <img src="image/xor2_sim_pre.png" width="450" alt="XOR2 Pre-Layout Waveform"/> | <img src="image/xor2_sim_post.png" width="450" alt="XOR2 Post-Layout Waveform"/> |
+
+---
+
+### 5.4. Propagation Delay Measurements & Waveforms
+
+Propagation delays are extracted at the $50\%$ supply voltage crossing point ($V_{DD}/2 = 0.85\text{ V}$):
+
+#### A. Low-to-High Propagation Delay ($t_{pLH}$)
+Measured when the output transitions from low to high ($0 \to 1$):
+
+| Pre-Layout $t_{pLH}$ Waveform | Post-Layout (PEX) $t_{pLH}$ Waveform |
+| :---: | :---: |
+| <img src="image/xor2_tplh_pre.png" width="450" alt="XOR2 Pre-Layout tpLH"/> | <img src="image/xor2_tplh_post.png" width="450" alt="XOR2 Post-Layout tpLH"/> |
+
+* **Pre-Layout $t_{pLH}$:** `20 ps`
+* **Post-Layout $t_{pLH}$:** `50 ps`
+* **$\Delta t_{pLH}$ (Parasitic Delay Impact):** `+30 ps`
+
+---
+
+#### B. High-to-Low Propagation Delay ($t_{pHL}$)
+Measured when the output transitions from high to low ($1 \to 0$):
+
+| Pre-Layout $t_{pHL}$ Waveform | Post-Layout (PEX) $t_{pHL}$ Waveform |
+| :---: | :---: |
+| <img src="image/xor2_tphl_pre.png" width="450" alt="XOR2 Pre-Layout tpHL"/> | <img src="image/xor2_tphl_post.png" width="450" alt="XOR2 Post-Layout tpHL"/> |
+
+* **Pre-Layout $t_{pHL}$:** `30 ps`
+* **Post-Layout $t_{pHL}$:** `60 ps`
+* **$\Delta t_{pHL}$ (Parasitic Delay Impact):** `+30 ps`
+
+---
+
+#### C. Summary Timing & Characterization Table
+
+| Timing Metric | Pre-Layout (Ideal) | Post-Layout (PEX) | Parasitic Delta ($\Delta$) | Unit |
+| :--- | :---: | :---: | :---: | :---: |
+| **Low-to-High Delay ($t_{pLH}$)** | `20` | `50` | `+30` | ps |
+| **High-to-Low Delay ($t_{pHL}$)** | `30` | `60` | `+30` | ps |
+| **Average Propagation Delay ($t_{pd}$)** | `25` | `55` | `+30` | ps |
+
+---

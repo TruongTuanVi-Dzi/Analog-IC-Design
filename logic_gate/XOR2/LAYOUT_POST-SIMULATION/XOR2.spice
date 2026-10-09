@@ -1,0 +1,72 @@
+* NGSPICE file created from XOR2.ext - technology: ihp-sg13g2
+
+.subckt nmos a_100_15# a_74_n21# sub a_0_0#
+X0 a_100_15# a_74_n21# a_0_0# sub sg13_lv_nmos ad=0.1005p pd=1.34u as=0.1005p ps=1.34u w=0.15u l=0.13u
+C0 a_0_0# a_100_15# 0.01201f
+C1 a_100_15# sub 0.04751f
+C2 a_0_0# sub 0.04751f
+.ends
+
+.subckt pmos a_100_15# w_n62_n62# a_74_n21# sub a_0_0#
+X0 a_100_15# a_74_n21# a_0_0# w_n62_n62# sg13_lv_pmos ad=0.1005p pd=1.34u as=0.1005p ps=1.34u w=0.15u l=0.13u
+C0 w_n62_n62# a_74_n21# 0.02613f
+C1 a_0_0# a_100_15# 0.01201f
+C2 a_100_15# sub 0.03108f
+C3 a_0_0# sub 0.03108f
+.ends
+
+.subckt pmos$1 a_100_15# w_n62_n62# a_74_n21# sub a_0_0#
+X0 a_100_15# a_74_n21# a_0_0# w_n62_n62# sg13_lv_pmos ad=0.1005p pd=1.34u as=0.1005p ps=1.34u w=0.15u l=0.13u
+C0 w_n62_n62# a_74_n21# 0.02613f
+C1 a_0_0# a_100_15# 0.01201f
+C2 a_100_15# sub 0.03108f
+C3 a_0_0# sub 0.03108f
+.ends
+
+.subckt XOR2 VDD A B VSS Y
+Xnmos_0 m1_83_n830# a_33_n800# VSS VSS nmos
+Xnmos_1 VSS B VSS m1_n231_n830# nmos
+Xnmos_2 m1_83_n830# a_n133_n131# VSS Y nmos
+Xnmos_3 Y A VSS m1_n231_n830# nmos
+Xnmos_4 VSS B VSS a_33_n800# nmos
+Xnmos_5 a_n133_n131# A VSS VSS nmos
+Xpmos_0 VDD VDD B VSS a_33_n800# pmos
+Xpmos_1 a_n133_n131# VDD A VSS VDD pmos
+Xpmos$1_0 m1_n145_44# VDD a_n133_n131# VSS Y pmos$1
+Xpmos_2 Y VDD a_33_n800# VSS m1_n145_44# pmos
+Xpmos_3 m1_n145_44# VDD B VSS VDD pmos
+Xpmos_4 VDD VDD A VSS m1_n145_44# pmos
+C0 m1_83_n830# m1_n231_n830# 0.01635f
+C1 VDD B 0.26874f
+C2 a_33_n800# Y 0.03516f
+C3 a_n133_n131# VDD 0.13763f
+C4 VDD A 0.28553f
+C5 m1_n145_44# B 0.03155f
+C6 m1_83_n830# B 0.03208f
+C7 m1_n145_44# a_n133_n131# 0.04579f
+C8 m1_n145_44# A 0.03458f
+C9 Y VDD 0.04959f
+C10 a_33_n800# VDD 0.14328f
+C11 m1_n145_44# Y 0.03902f
+C12 m1_n231_n830# B 0.02161f
+C13 m1_83_n830# Y 0.01197f
+C14 m1_n145_44# a_33_n800# 0.04599f
+C15 a_33_n800# m1_83_n830# 0.05541f
+C16 m1_n231_n830# A 0.05468f
+C17 a_n133_n131# B 0.04146f
+C18 m1_n145_44# VDD 0.07725f
+C19 B A 0.04721f
+C20 a_n133_n131# A 0.39694f
+C21 a_33_n800# B 0.12901f
+C22 a_n133_n131# Y 0.06294f
+C23 Y A 0.07033f
+C24 a_33_n800# a_n133_n131# 0.04338f
+C25 VDD VSS 0.20187f
+C26 A VSS 0.16461f
+C27 m1_n231_n830# VSS 0.11192f
+C28 m1_83_n830# VSS 0.09618f
+C29 a_n133_n131# VSS 0.36151f
+C30 B VSS 0.4608f
+C31 a_33_n800# VSS 0.42185f
+.ends
+

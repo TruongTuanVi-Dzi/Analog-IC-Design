@@ -1,0 +1,16 @@
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/Bai_Tap_Buoi_2/XOR_GATE/Layout/XOR2.sch
+.subckt XOR2 VDD B A Y VSS
+*.PININFO A:I Y:O B:I VDD:B VSS:O
+MM1 Y A net2 VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+MM2 net1 A VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+MM3 net1 B VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+MM6 A_dot A VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+MM7 A_dot A VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+MM8 Y A_dot net1 VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+MM9 Y B_dot net1 VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+MM10 net2 B VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+MM11 Y A_dot net3 VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+MM12 net3 B_dot VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+MM13 B_dot B VDD VDD sg13_lv_pmos w=0.15u l=0.13u ng=1
+MM14 B_dot B VSS VSS sg13_lv_nmos w=0.15u l=0.13u ng=1
+.ends
