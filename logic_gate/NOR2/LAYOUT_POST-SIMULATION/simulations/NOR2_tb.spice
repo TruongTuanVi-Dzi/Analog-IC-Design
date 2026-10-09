@@ -1,0 +1,27 @@
+** sch_path: /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/Bai_Tap_Buoi_2/NOR_GATE/Layout/NOR2_tb.sch
+**.subckt NOR2_tb
+VDD Vdd Vss 1.2
+VSS Vss 0 0
+VA Va Vss PULSE(0 1.2 0 100p 100p 20n 40n)
+VB Vb Vss PULSE(0 1.2 0 100p 100p 10n 20n)
+x1 Vdd Vss Va Vb Vout NOR2
+**** begin user architecture code
+
+
+.lib cornerMOSlv.lib mos_tt
+
+
+
+
+.tran 10p 100n
+.save all
+
+
+
+
+.inc /home/tundzi-lp1710/LAYOUT_ANALOG_FALL_DTVT/Bai_Tap_Buoi_2/NOR_GATE/Layout/NOR2.spice
+
+
+**** end user architecture code
+**.ends
+.end

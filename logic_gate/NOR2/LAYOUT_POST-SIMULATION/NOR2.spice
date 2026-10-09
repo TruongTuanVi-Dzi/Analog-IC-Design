@@ -1,0 +1,34 @@
+* NGSPICE file created from NOR2.ext - technology: ihp-sg13g2
+
+.subckt nmos a_100_15# a_74_n21# sub a_0_0#
+X0 a_100_15# a_74_n21# a_0_0# sub sg13_lv_nmos ad=0.1005p pd=1.34u as=0.1005p ps=1.34u w=0.15u l=0.13u
+C0 a_0_0# a_100_15# 0.01201f
+C1 a_100_15# sub 0.04751f
+C2 a_0_0# sub 0.04751f
+.ends
+
+.subckt pmos a_100_15# w_n62_n62# a_74_n21# sub a_0_0#
+X0 a_100_15# a_74_n21# a_0_0# w_n62_n62# sg13_lv_pmos ad=0.1005p pd=1.34u as=0.1005p ps=1.34u w=0.15u l=0.13u
+C0 a_100_15# a_0_0# 0.01201f
+C1 w_n62_n62# a_74_n21# 0.02613f
+C2 a_100_15# sub 0.03108f
+C3 a_0_0# sub 0.03108f
+.ends
+
+.subckt NOR2 VDD VSS A B Y
+Xnmos_0 Y B VSS VSS nmos
+Xnmos_1 VSS A VSS Y nmos
+Xpmos_0 Y VDD B VSS pmos_0/a_0_0# pmos
+Xpmos_1 pmos_0/a_0_0# VDD A VSS VDD pmos
+C0 B A 0.02799f
+C1 Y B 0.02691f
+C2 VDD B 0.02815f
+C3 VDD A 0.027f
+C4 Y VDD 0.05288f
+C5 pmos_0/a_0_0# VSS -0.03189f
+C6 VDD VSS 0.14909f
+C7 A VSS 0.02724f
+C8 Y VSS 0.14131f
+C9 B VSS 0.02337f
+.ends
+

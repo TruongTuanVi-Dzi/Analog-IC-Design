@@ -290,3 +290,96 @@ Measured when the output transitions from high to low ($1 \to 0$):
 
 ---
 
+
+
+
+
+## 4. 2-Input NOR Gate (`NOR2`)
+
+The `NOR2` standard cell is implemented using a complementary static CMOS topology with two PMOS transistors connected in series (pull-up network) and two NMOS transistors connected in parallel (pull-down network) fabricated on the IHP SG13G2 (130nm BiCMOS) process.
+
+---
+
+### 4.1. Schematic & Physical Layout
+
+* **Transistor Sizing:** PMOS ($W = 0.15\,\mu\text{m}, L = 0.13\,\mu\text{m}$), NMOS ($W = 0.15\,\mu\text{m}, L = 0.13\,\mu\text{m}$).
+* **Physical Layout:** Full-custom standard cell layout featuring continuous supply rails ($V_{DD}, V_{SS}$), shared active diffusion regions to minimize parasitic junction area, and integrated well/substrate taps.
+
+| Transistor-Level Schematic | Full-Custom Layout (`NOR2.gds`) |
+| :---: | :---: |
+| <img src="image/nor2_schematic.png" width="450" alt="NOR2 Schematic"/> | <img src="image/nor2_layout.png" width="450" alt="NOR2 Layout"/> |
+
+* **Cell Dimensions:** `[Width W] 2.255µm` × `[Height H] 2.6949892µm`
+* **Silicon Area:** `[W x H] 6.0321µm²`
+
+#### Physical Verification (DRC & LVS)
+* **DRC (Design Rule Check):** 0 errors / 100% clean verification on IHP SG13G2 rules.
+* **LVS (Layout Versus Schematic):** Netlists matched completely with zero topology or device property discrepancies.
+
+| DRC Clean Verification | LVS Clean Verification |
+| :---: | :---: |
+| <img src="image/nor2_drc_clean.png" width="450" alt="NOR2 DRC Clean"/> | <img src="image/nor2_lvs_clean.png" width="450" alt="NOR2 LVS Clean"/> |
+
+---
+
+### 4.2. Pre-Layout vs. Post-Layout Testbench Setup
+
+* **Operating Conditions:** $V_{DD} = 1.2\text{ V}$, $T = 27^\circ\text{C}$, Typical Corner (`cornerMOSlv.lib mos_tt`).
+* **Input Stimuli:** 
+  * $V_A$: Pulse ($0\text{ V} \to 1.2\text{ V}$, Period $= 40\text{ ns}$, Pulse Width $= 20\text{ ns}$, $t_r = t_f = 100\text{ ps}$).
+  * $V_B$: Pulse ($0\text{ V} \to 1.2\text{ V}$, Period $= 20\text{ ns}$, Pulse Width $= 10\text{ ns}$, $t_r = t_f = 100\text{ ps}$).
+
+| Pre-Layout Testbench (`TEST_PRE.sch`) | Post-Layout Testbench (`TEST_POST.sch`) |
+| :---: | :---: |
+| <img src="image/nor2_tb_pre.png" width="450" alt="NOR2 Pre-Layout Testbench"/> | <img src="image/nor2_tb_post.png" width="450" alt="NOR2 Post-Layout Testbench"/> |
+
+---
+
+### 4.3. Transient Simulation Results
+
+| Pre-Layout Transient Waveform | Post-Layout (PEX) Transient Waveform |
+| :---: | :---: |
+| <img src="image/nor2_sim_pre.png" width="450" alt="NOR2 Pre-Layout Waveform"/> | <img src="image/nor2_sim_post.png" width="450" alt="NOR2 Post-Layout Waveform"/> |
+
+---
+
+### 4.4. Propagation Delay Measurements & Waveforms
+
+Propagation delays are measured at the $50\%$ logic transition threshold ($V_{DD}/2 = 0.6\text{ V}$) between the triggering input edge and the output response:
+
+#### A. Low-to-High Propagation Delay ($t_{pLH}$)
+Measured when the output transitions from low to high ($0 \to 1$):
+
+| Pre-Layout $t_{pLH}$ Waveform | Post-Layout (PEX) $t_{pLH}$ Waveform |
+| :---: | :---: |
+| <img src="image/nor2_tplh_pre.png" width="450" alt="NOR2 Pre-Layout tpLH"/> | <img src="image/nor2_tplh_post.png" width="450" alt="NOR2 Post-Layout tpLH"/> |
+
+* **Pre-Layout $t_{pLH}$:** `40 ps`
+* **Post-Layout $t_{pLH}$:** `60 ps`
+* **$\Delta t_{pLH}$ (Parasitic Delay Impact):** `+20 ps`
+
+---
+
+#### B. High-to-Low Propagation Delay ($t_{pHL}$)
+Measured when the output transitions from high to low ($1 \to 0$):
+
+| Pre-Layout $t_{pHL}$ Waveform | Post-Layout (PEX) $t_{pHL}$ Waveform |
+| :---: | :---: |
+| <img src="image/nor2_tphl_pre.png" width="450" alt="NOR2 Pre-Layout tpHL"/> | <img src="image/nor2_tphl_post.png" width="450" alt="NOR2 Post-Layout tpHL"/> |
+
+* **Pre-Layout $t_{pHL}$:** `10 ps`
+* **Post-Layout $t_{pHL}$:** `20 ps`
+* **$\Delta t_{pHL}$ (Parasitic Delay Impact):** `+10 ps`
+
+---
+
+#### C. Summary Timing & Characterization Table
+
+| Timing Metric | Pre-Layout (Ideal) | Post-Layout (PEX) | Parasitic Delta ($\Delta$) | Unit |
+| :--- | :---: | :---: | :---: | :---: |
+| **Low-to-High Delay ($t_{pLH}$)** | `40` | `60` | `+20` | ps |
+| **High-to-Low Delay ($t_{pHL}$)** | `10` | `20` | `+10` | ps |
+| **Average Propagation Delay ($t_{pd}$)** | `25` | `40` | `+15` | ps |
+
+---
+
